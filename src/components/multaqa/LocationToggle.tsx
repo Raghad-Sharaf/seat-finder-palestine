@@ -28,13 +28,13 @@ export function LocationToggle({
 
 export function StatusBadge({ status }: { status: "Available" | "Reserved" | "Maintenance" }) {
   const styles = {
-    Available: "bg-success/10 text-success border-success/20",
-    Reserved: "bg-destructive/10 text-destructive border-destructive/20",
-    Maintenance: "bg-destructive/10 text-destructive border-destructive/20",
+    Available: "bg-success/85 text-success-foreground border-success",
+    Reserved: "bg-destructive/85 text-destructive-foreground border-destructive",
+    Maintenance: "bg-destructive/85 text-destructive-foreground border-destructive",
   };
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-semibold ${styles[status]}`}>
-      <span className="h-1.5 w-1.5 rounded-full bg-current" />
+    <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold backdrop-blur-sm shadow-sm ${styles[status]}`}>
+      <span className="h-1.5 w-1.5 rounded-full bg-current opacity-90" />
       {status}
     </span>
   );
