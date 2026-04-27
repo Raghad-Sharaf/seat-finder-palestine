@@ -128,33 +128,6 @@ function Home() {
             <Button asChild size="lg" variant="outline" className="border-navy text-navy hover:bg-navy hover:text-navy-foreground"><Link to="/rooms">Browse Rooms</Link></Button>
           </div>
         </section>
-        {/* placeholder to satisfy patch — old blocks below removed */}
-        <div className="hidden">
-          {[
-            { icon: Tag, title: "x", desc: "x" },
-              ].map((t) => (
-                <div key={t.title} className="text-center">
-                  <div className="mx-auto h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center mb-4">
-                    <t.icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="font-bold text-navy">{t.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{t.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="container mx-auto px-4 py-20 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-navy">Ready to find your seat?</h2>
-          <p className="mt-3 text-muted-foreground">Browse without an account. Book in under a minute.</p>
-          <div className="mt-8 flex justify-center gap-3">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90"><Link to="/desks">Browse Desks</Link></Button>
-            <Button asChild size="lg" variant="outline" className="border-navy text-navy hover:bg-navy hover:text-navy-foreground"><Link to="/rooms">Browse Rooms</Link></Button>
-          </div>
-        </section>
-        </div>
       </main>
       <SiteFooter />
     </div>
