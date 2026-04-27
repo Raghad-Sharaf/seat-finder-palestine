@@ -9,38 +9,315 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhosHereRouteImport } from './routes/whos-here'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as MyBookingsRouteImport } from './routes/my-bookings'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RoomsIndexRouteImport } from './routes/rooms.index'
+import { Route as DesksIndexRouteImport } from './routes/desks.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as RoomsRoomIdRouteImport } from './routes/rooms.$roomId'
+import { Route as DesksDeskIdRouteImport } from './routes/desks.$deskId'
+import { Route as BookingConfirmationRouteImport } from './routes/booking.confirmation'
+import { Route as AdminUnpaidRouteImport } from './routes/admin.unpaid'
+import { Route as AdminSeatsRouteImport } from './routes/admin.seats'
+import { Route as AdminRoomsRouteImport } from './routes/admin.rooms'
+import { Route as AdminCreateBookingRouteImport } from './routes/admin.create-booking'
+import { Route as AdminBookingsRouteImport } from './routes/admin.bookings'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as MyBookingsBookingIdModifyRouteImport } from './routes/my-bookings.$bookingId.modify'
+import { Route as BookingItemTypeItemIdRouteImport } from './routes/booking.$itemType.$itemId'
 
+const WhosHereRoute = WhosHereRouteImport.update({
+  id: '/whos-here',
+  path: '/whos-here',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyBookingsRoute = MyBookingsRouteImport.update({
+  id: '/my-bookings',
+  path: '/my-bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoomsIndexRoute = RoomsIndexRouteImport.update({
+  id: '/rooms/',
+  path: '/rooms/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DesksIndexRoute = DesksIndexRouteImport.update({
+  id: '/desks/',
+  path: '/desks/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const RoomsRoomIdRoute = RoomsRoomIdRouteImport.update({
+  id: '/rooms/$roomId',
+  path: '/rooms/$roomId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DesksDeskIdRoute = DesksDeskIdRouteImport.update({
+  id: '/desks/$deskId',
+  path: '/desks/$deskId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingConfirmationRoute = BookingConfirmationRouteImport.update({
+  id: '/booking/confirmation',
+  path: '/booking/confirmation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUnpaidRoute = AdminUnpaidRouteImport.update({
+  id: '/unpaid',
+  path: '/unpaid',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSeatsRoute = AdminSeatsRouteImport.update({
+  id: '/seats',
+  path: '/seats',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRoomsRoute = AdminRoomsRouteImport.update({
+  id: '/rooms',
+  path: '/rooms',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCreateBookingRoute = AdminCreateBookingRouteImport.update({
+  id: '/create-booking',
+  path: '/create-booking',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBookingsRoute = AdminBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AdminRoute,
+} as any)
+const MyBookingsBookingIdModifyRoute =
+  MyBookingsBookingIdModifyRouteImport.update({
+    id: '/$bookingId/modify',
+    path: '/$bookingId/modify',
+    getParentRoute: () => MyBookingsRoute,
+  } as any)
+const BookingItemTypeItemIdRoute = BookingItemTypeItemIdRouteImport.update({
+  id: '/booking/$itemType/$itemId',
+  path: '/booking/$itemType/$itemId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/my-bookings': typeof MyBookingsRouteWithChildren
+  '/signup': typeof SignupRoute
+  '/whos-here': typeof WhosHereRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/create-booking': typeof AdminCreateBookingRoute
+  '/admin/rooms': typeof AdminRoomsRoute
+  '/admin/seats': typeof AdminSeatsRoute
+  '/admin/unpaid': typeof AdminUnpaidRoute
+  '/booking/confirmation': typeof BookingConfirmationRoute
+  '/desks/$deskId': typeof DesksDeskIdRoute
+  '/rooms/$roomId': typeof RoomsRoomIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/desks/': typeof DesksIndexRoute
+  '/rooms/': typeof RoomsIndexRoute
+  '/booking/$itemType/$itemId': typeof BookingItemTypeItemIdRoute
+  '/my-bookings/$bookingId/modify': typeof MyBookingsBookingIdModifyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/my-bookings': typeof MyBookingsRouteWithChildren
+  '/signup': typeof SignupRoute
+  '/whos-here': typeof WhosHereRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/create-booking': typeof AdminCreateBookingRoute
+  '/admin/rooms': typeof AdminRoomsRoute
+  '/admin/seats': typeof AdminSeatsRoute
+  '/admin/unpaid': typeof AdminUnpaidRoute
+  '/booking/confirmation': typeof BookingConfirmationRoute
+  '/desks/$deskId': typeof DesksDeskIdRoute
+  '/rooms/$roomId': typeof RoomsRoomIdRoute
+  '/admin': typeof AdminIndexRoute
+  '/desks': typeof DesksIndexRoute
+  '/rooms': typeof RoomsIndexRoute
+  '/booking/$itemType/$itemId': typeof BookingItemTypeItemIdRoute
+  '/my-bookings/$bookingId/modify': typeof MyBookingsBookingIdModifyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/my-bookings': typeof MyBookingsRouteWithChildren
+  '/signup': typeof SignupRoute
+  '/whos-here': typeof WhosHereRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/create-booking': typeof AdminCreateBookingRoute
+  '/admin/rooms': typeof AdminRoomsRoute
+  '/admin/seats': typeof AdminSeatsRoute
+  '/admin/unpaid': typeof AdminUnpaidRoute
+  '/booking/confirmation': typeof BookingConfirmationRoute
+  '/desks/$deskId': typeof DesksDeskIdRoute
+  '/rooms/$roomId': typeof RoomsRoomIdRoute
+  '/admin/': typeof AdminIndexRoute
+  '/desks/': typeof DesksIndexRoute
+  '/rooms/': typeof RoomsIndexRoute
+  '/booking/$itemType/$itemId': typeof BookingItemTypeItemIdRoute
+  '/my-bookings/$bookingId/modify': typeof MyBookingsBookingIdModifyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/my-bookings'
+    | '/signup'
+    | '/whos-here'
+    | '/admin/analytics'
+    | '/admin/bookings'
+    | '/admin/create-booking'
+    | '/admin/rooms'
+    | '/admin/seats'
+    | '/admin/unpaid'
+    | '/booking/confirmation'
+    | '/desks/$deskId'
+    | '/rooms/$roomId'
+    | '/admin/'
+    | '/desks/'
+    | '/rooms/'
+    | '/booking/$itemType/$itemId'
+    | '/my-bookings/$bookingId/modify'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/my-bookings'
+    | '/signup'
+    | '/whos-here'
+    | '/admin/analytics'
+    | '/admin/bookings'
+    | '/admin/create-booking'
+    | '/admin/rooms'
+    | '/admin/seats'
+    | '/admin/unpaid'
+    | '/booking/confirmation'
+    | '/desks/$deskId'
+    | '/rooms/$roomId'
+    | '/admin'
+    | '/desks'
+    | '/rooms'
+    | '/booking/$itemType/$itemId'
+    | '/my-bookings/$bookingId/modify'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/my-bookings'
+    | '/signup'
+    | '/whos-here'
+    | '/admin/analytics'
+    | '/admin/bookings'
+    | '/admin/create-booking'
+    | '/admin/rooms'
+    | '/admin/seats'
+    | '/admin/unpaid'
+    | '/booking/confirmation'
+    | '/desks/$deskId'
+    | '/rooms/$roomId'
+    | '/admin/'
+    | '/desks/'
+    | '/rooms/'
+    | '/booking/$itemType/$itemId'
+    | '/my-bookings/$bookingId/modify'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  MyBookingsRoute: typeof MyBookingsRouteWithChildren
+  SignupRoute: typeof SignupRoute
+  WhosHereRoute: typeof WhosHereRoute
+  BookingConfirmationRoute: typeof BookingConfirmationRoute
+  DesksDeskIdRoute: typeof DesksDeskIdRoute
+  RoomsRoomIdRoute: typeof RoomsRoomIdRoute
+  DesksIndexRoute: typeof DesksIndexRoute
+  RoomsIndexRoute: typeof RoomsIndexRoute
+  BookingItemTypeItemIdRoute: typeof BookingItemTypeItemIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/whos-here': {
+      id: '/whos-here'
+      path: '/whos-here'
+      fullPath: '/whos-here'
+      preLoaderRoute: typeof WhosHereRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-bookings': {
+      id: '/my-bookings'
+      path: '/my-bookings'
+      fullPath: '/my-bookings'
+      preLoaderRoute: typeof MyBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +325,154 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rooms/': {
+      id: '/rooms/'
+      path: '/rooms'
+      fullPath: '/rooms/'
+      preLoaderRoute: typeof RoomsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/desks/': {
+      id: '/desks/'
+      path: '/desks'
+      fullPath: '/desks/'
+      preLoaderRoute: typeof DesksIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/rooms/$roomId': {
+      id: '/rooms/$roomId'
+      path: '/rooms/$roomId'
+      fullPath: '/rooms/$roomId'
+      preLoaderRoute: typeof RoomsRoomIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/desks/$deskId': {
+      id: '/desks/$deskId'
+      path: '/desks/$deskId'
+      fullPath: '/desks/$deskId'
+      preLoaderRoute: typeof DesksDeskIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking/confirmation': {
+      id: '/booking/confirmation'
+      path: '/booking/confirmation'
+      fullPath: '/booking/confirmation'
+      preLoaderRoute: typeof BookingConfirmationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/unpaid': {
+      id: '/admin/unpaid'
+      path: '/unpaid'
+      fullPath: '/admin/unpaid'
+      preLoaderRoute: typeof AdminUnpaidRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/seats': {
+      id: '/admin/seats'
+      path: '/seats'
+      fullPath: '/admin/seats'
+      preLoaderRoute: typeof AdminSeatsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/rooms': {
+      id: '/admin/rooms'
+      path: '/rooms'
+      fullPath: '/admin/rooms'
+      preLoaderRoute: typeof AdminRoomsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/create-booking': {
+      id: '/admin/create-booking'
+      path: '/create-booking'
+      fullPath: '/admin/create-booking'
+      preLoaderRoute: typeof AdminCreateBookingRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/bookings': {
+      id: '/admin/bookings'
+      path: '/bookings'
+      fullPath: '/admin/bookings'
+      preLoaderRoute: typeof AdminBookingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/my-bookings/$bookingId/modify': {
+      id: '/my-bookings/$bookingId/modify'
+      path: '/$bookingId/modify'
+      fullPath: '/my-bookings/$bookingId/modify'
+      preLoaderRoute: typeof MyBookingsBookingIdModifyRouteImport
+      parentRoute: typeof MyBookingsRoute
+    }
+    '/booking/$itemType/$itemId': {
+      id: '/booking/$itemType/$itemId'
+      path: '/booking/$itemType/$itemId'
+      fullPath: '/booking/$itemType/$itemId'
+      preLoaderRoute: typeof BookingItemTypeItemIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminBookingsRoute: typeof AdminBookingsRoute
+  AdminCreateBookingRoute: typeof AdminCreateBookingRoute
+  AdminRoomsRoute: typeof AdminRoomsRoute
+  AdminSeatsRoute: typeof AdminSeatsRoute
+  AdminUnpaidRoute: typeof AdminUnpaidRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminBookingsRoute: AdminBookingsRoute,
+  AdminCreateBookingRoute: AdminCreateBookingRoute,
+  AdminRoomsRoute: AdminRoomsRoute,
+  AdminSeatsRoute: AdminSeatsRoute,
+  AdminUnpaidRoute: AdminUnpaidRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface MyBookingsRouteChildren {
+  MyBookingsBookingIdModifyRoute: typeof MyBookingsBookingIdModifyRoute
+}
+
+const MyBookingsRouteChildren: MyBookingsRouteChildren = {
+  MyBookingsBookingIdModifyRoute: MyBookingsBookingIdModifyRoute,
+}
+
+const MyBookingsRouteWithChildren = MyBookingsRoute._addFileChildren(
+  MyBookingsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  LoginRoute: LoginRoute,
+  MyBookingsRoute: MyBookingsRouteWithChildren,
+  SignupRoute: SignupRoute,
+  WhosHereRoute: WhosHereRoute,
+  BookingConfirmationRoute: BookingConfirmationRoute,
+  DesksDeskIdRoute: DesksDeskIdRoute,
+  RoomsRoomIdRoute: RoomsRoomIdRoute,
+  DesksIndexRoute: DesksIndexRoute,
+  RoomsIndexRoute: RoomsIndexRoute,
+  BookingItemTypeItemIdRoute: BookingItemTypeItemIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
