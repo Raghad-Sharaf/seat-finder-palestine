@@ -10,7 +10,6 @@ export type Location = "Nablus" | "Ramallah";
 export type Zone = "Deep Work" | "Calls Allowed";
 export type DeskType = "Flex Desk" | "Hot Desk" | "Dedicated Desk";
 export type Status = "Available" | "Reserved" | "Maintenance";
-export type WifiTier = "Fast" | "Good" | "Basic";
 
 export interface Desk {
   id: string;
@@ -23,7 +22,7 @@ export interface Desk {
   priceHalfDay: number;
   priceFullDay: number;
   image: string;
-  wifi: WifiTier;
+  images: string[];
   amenities: { label: string; available: boolean }[];
   reviews: { author: string; date: string; rating: number; comment: string }[];
 }
@@ -40,6 +39,7 @@ export interface Room {
   pricePerHour: number;
   priceHalfDay: number;
   image: string;
+  images: string[];
   adminOnly?: boolean;
   equipment: { label: string; available: boolean }[];
   reviews: { author: string; date: string; rating: number; comment: string }[];
