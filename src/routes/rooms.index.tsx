@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { SiteHeader } from "@/components/multaqa/SiteHeader";
 import { SiteFooter } from "@/components/multaqa/SiteFooter";
 import { LocationToggle, StatusBadge } from "@/components/multaqa/LocationToggle";
 import { Button } from "@/components/ui/button";
-import { rooms, type Location, type RoomType } from "@/lib/multaqa/data";
+import { rooms as initialRooms, type Location, type RoomType, type Status } from "@/lib/multaqa/data";
 import { Users, SlidersHorizontal } from "lucide-react";
 
 export const Route = createFileRoute("/rooms/")({
@@ -22,6 +22,25 @@ const roomTypes: RoomType[] = ["Private Office", "Meeting Room", "Phone Booth"];
 function RoomsPage() {
   const [location, setLocation] = useState<Location>("Nablus");
   const [type, setType] = useState<RoomType | "All">("All");
+  const [statuses, setStatuses] = useState<Record<string, Status>>(() =>
+    Object.fromEntries(initialRooms.map((r) => [r.id, r.status])),
+  );
+  useEffect(() => {
+    const t = setInterval(() => {
+      setStatuses((prev) => {
+        const ids = Object.keys(prev);
+        const id = ids[Math.floor(Math.random() * ids.length)];
+        const cur = prev[id];
+        if (cur === "Maintenance") return prev;
+        return { ...prev, [id]: cur === "Available" ? "Reserved" : "Available" };
+      });
+    }, 8000);
+    return () => clearInterval(t);
+  }, []);
+  const rooms = useMemo(
+    () => initialRooms.map((r) => ({ ...r, status: statuses[r.id] ?? r.status })),
+    [statuses],
+  );
 
   const filtered = useMemo(
     () =>
@@ -31,7 +50,7 @@ function RoomsPage() {
         if (type !== "All" && r.type !== type) return false;
         return true;
       }),
-    [location, type],
+    [rooms, location, type],
   );
 
   return (
@@ -64,8 +83,9 @@ function RoomsPage() {
 
         {filtered.length === 0 ? (
           <div className="rounded-xl border border-dashed border-border p-12 text-center">
-            <p className="text-navy font-semibold">No rooms match your filters.</p>
-            <p className="text-sm text-muted-foreground mt-1">Try a different location or type.</p>
+            <p className="text-navy font-semibold">No rooms available right now.</p>
+            <p className="text-sm text-muted-foreground mt-1">Browse our desks instead.</p>
+            <Button asChild className="mt-4 bg-primary hover:bg-primary/90"><Link to="/desks">Browse Desks</Link></Button>
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

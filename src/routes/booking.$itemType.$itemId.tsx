@@ -45,6 +45,7 @@ function BookingFlow() {
   const [slot, setSlot] = useState<string>("");
   const [duration, setDuration] = useState<Duration>("1 hour");
   const [email, setEmail] = useState(user?.email ?? "");
+  const [conflictError, setConflictError] = useState<string | null>(null);
 
   const isDesk = params.itemType === "desk";
   const desk = isDesk ? (item as ReturnType<typeof getDesk>)! : null;
@@ -68,7 +69,18 @@ function BookingFlow() {
   const isToday = date === today.toDateString();
   const currentHour = today.getHours();
 
+  const deadline = new Date();
+  deadline.setDate(deadline.getDate() + 3);
+  const deadlineStr = deadline.toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" });
+
   const confirm = () => {
+    // Simulate a concurrent-booking race ~12% of the time
+    if (Math.random() < 0.12) {
+      setConflictError("This slot was just booked. Please select a different time.");
+      setStep(1);
+      setSlot("");
+      return;
+    }
     const ref = "MQR-" + Math.floor(20000 + Math.random() * 9999);
     navigate({
       to: "/booking/confirmation",
@@ -116,6 +128,12 @@ function BookingFlow() {
           <div className="lg:col-span-2 space-y-5">
             {step === 1 ? (
               <>
+                {conflictError && (
+                  <div className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive font-medium flex items-start gap-2">
+                    <Info className="h-4 w-4 mt-0.5 shrink-0" />
+                    <span>{conflictError}</span>
+                  </div>
+                )}
                 <div className="rounded-xl border border-border bg-card p-6">
                   <h2 className="text-lg font-bold text-navy flex items-center gap-2 mb-4">
                     <CalendarIcon className="h-5 w-5 text-primary" /> Pick a date
@@ -233,6 +251,15 @@ function BookingFlow() {
                       </div>
                     </div>
                     <Check className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="mt-4 rounded-lg bg-amber/10 border border-amber/30 p-3 text-sm" style={{ background: "color-mix(in oklab, var(--amber) 10%, transparent)", borderColor: "color-mix(in oklab, var(--amber) 35%, transparent)" }}>
+                    <p className="font-semibold text-navy">Payment deadline: {deadlineStr}</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      You must pay on-site by this date. Unpaid bookings will be automatically cancelled. We'll send a reminder 24 hours before the deadline.
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Free cancellation any time before payment — no penalty.
+                    </p>
                   </div>
                 </div>
               </>

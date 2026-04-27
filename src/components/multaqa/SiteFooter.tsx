@@ -2,8 +2,8 @@ import { Logo } from "./Logo";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border bg-navy-tint mt-20">
-      <div className="container mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
+    <footer className="border-t border-border bg-navy-tint">
+      <div className="max-w-6xl mx-auto px-6 md:px-10 py-10 grid gap-8 md:grid-cols-3">
         <div>
           <Logo />
           <p className="mt-3 text-sm text-muted-foreground max-w-xs">

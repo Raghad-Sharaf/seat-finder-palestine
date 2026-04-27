@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useParams, notFound } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteHeader } from "@/components/multaqa/SiteHeader";
 import { SiteFooter } from "@/components/multaqa/SiteFooter";
 import { StatusBadge } from "@/components/multaqa/LocationToggle";
 import { Button } from "@/components/ui/button";
 import { getRoom, locationAddress } from "@/lib/multaqa/data";
-import { Check, X, MessageCircle, Users, MapPin, ArrowLeft, Star } from "lucide-react";
+import { Check, X, MessageCircle, Users, MapPin, ArrowLeft, Star, ChevronLeft, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/rooms/$roomId")({
   head: ({ params }) => {
@@ -23,6 +24,8 @@ function RoomDetail() {
   const { roomId } = useParams({ from: "/rooms/$roomId" });
   const room = getRoom(roomId);
   if (!room || room.adminOnly) throw notFound();
+  const [photoIdx, setPhotoIdx] = useState(0);
+  const photos = room.images && room.images.length ? room.images : [room.image];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -34,9 +37,33 @@ function RoomDetail() {
 
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <div className="rounded-xl overflow-hidden border border-border bg-muted aspect-[16/10]">
-              <img src={room.image} alt={room.name} className="h-full w-full object-cover" width={1024} height={640} />
+            <div className="relative rounded-xl overflow-hidden border border-border bg-muted aspect-[16/10]">
+              <img src={photos[photoIdx]} alt={`${room.name} — photo ${photoIdx + 1}`} className="h-full w-full object-cover" width={1024} height={640} />
+              {photos.length > 1 && (
+                <>
+                  <button onClick={() => setPhotoIdx((i) => (i - 1 + photos.length) % photos.length)} aria-label="Previous photo" className="absolute left-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-background/85 backdrop-blur-sm shadow flex items-center justify-center text-navy hover:bg-background">
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button onClick={() => setPhotoIdx((i) => (i + 1) % photos.length)} aria-label="Next photo" className="absolute right-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-background/85 backdrop-blur-sm shadow flex items-center justify-center text-navy hover:bg-background">
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                    {photos.map((_, i) => (
+                      <button key={i} onClick={() => setPhotoIdx(i)} aria-label={`Go to photo ${i + 1}`} className={`h-2 rounded-full transition-all ${i === photoIdx ? "w-6 bg-white" : "w-2 bg-white/60"}`} />
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
+            {photos.length > 1 && (
+              <div className="mt-2 flex gap-2 overflow-x-auto">
+                {photos.map((p, i) => (
+                  <button key={i} onClick={() => setPhotoIdx(i)} className={`h-16 w-20 shrink-0 rounded-md overflow-hidden border-2 transition ${i === photoIdx ? "border-primary" : "border-transparent opacity-70 hover:opacity-100"}`}>
+                    <img src={p} alt="" className="h-full w-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <h1 className="text-3xl font-bold text-navy">{room.name}</h1>

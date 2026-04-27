@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { SiteHeader } from "@/components/multaqa/SiteHeader";
 import { SiteFooter } from "@/components/multaqa/SiteFooter";
 import { LocationToggle, StatusBadge, ZoneBadge } from "@/components/multaqa/LocationToggle";
 import { Button } from "@/components/ui/button";
-import { desks, type Location, type Zone, type DeskType } from "@/lib/multaqa/data";
-import { Wifi, MonitorIcon, ArmchairIcon, SlidersHorizontal } from "lucide-react";
+import { desks as initialDesks, type Location, type Zone, type DeskType, type Status } from "@/lib/multaqa/data";
+import { MonitorIcon, ArmchairIcon, SlidersHorizontal, Plug } from "lucide-react";
 
 export const Route = createFileRoute("/desks/")({
   head: () => ({
@@ -26,6 +26,26 @@ function DesksPage() {
   const [zone, setZone] = useState<Zone | "All">("All");
   const [type, setType] = useState<DeskType | "All">("All");
   const [amenity, setAmenity] = useState<string | "All">("All");
+  // Live status simulation: flip one random desk every 8s to simulate real-time updates
+  const [statuses, setStatuses] = useState<Record<string, Status>>(() =>
+    Object.fromEntries(initialDesks.map((d) => [d.id, d.status])),
+  );
+  useEffect(() => {
+    const t = setInterval(() => {
+      setStatuses((prev) => {
+        const ids = Object.keys(prev);
+        const id = ids[Math.floor(Math.random() * ids.length)];
+        const cur = prev[id];
+        if (cur === "Maintenance") return prev;
+        return { ...prev, [id]: cur === "Available" ? "Reserved" : "Available" };
+      });
+    }, 8000);
+    return () => clearInterval(t);
+  }, []);
+  const desks = useMemo(
+    () => initialDesks.map((d) => ({ ...d, status: statuses[d.id] ?? d.status })),
+    [statuses],
+  );
 
   const filtered = useMemo(() => {
     return desks.filter((d) => {
@@ -38,7 +58,7 @@ function DesksPage() {
       }
       return true;
     });
-  }, [location, zone, type, amenity]);
+  }, [desks, location, zone, type, amenity]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -62,9 +82,12 @@ function DesksPage() {
 
         {filtered.length === 0 ? (
           <div className="rounded-xl border border-dashed border-border p-12 text-center">
-            <p className="text-navy font-semibold">No desks match your filters.</p>
-            <p className="text-sm text-muted-foreground mt-1">Try adjusting your search.</p>
-            <Button variant="outline" className="mt-4" onClick={() => { setZone("All"); setType("All"); setAmenity("All"); }}>Clear filters</Button>
+            <p className="text-navy font-semibold">No desks available right now.</p>
+            <p className="text-sm text-muted-foreground mt-1">Check back soon or browse our rooms.</p>
+            <div className="mt-4 flex gap-2 justify-center">
+              <Button variant="outline" onClick={() => { setZone("All"); setType("All"); setAmenity("All"); }}>Clear filters</Button>
+              <Button asChild className="bg-primary hover:bg-primary/90"><Link to="/rooms">Browse Rooms</Link></Button>
+            </div>
           </div>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -90,7 +113,7 @@ function DesksPage() {
                     <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">{d.type}</span>
                   </div>
                   <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
-                    <span className="inline-flex items-center gap-1"><Wifi className="h-3 w-3" />{d.wifi}</span>
+                    <span className="inline-flex items-center gap-1"><Plug className="h-3 w-3" />Power</span>
                     {d.amenities.find((a) => a.label === "Window seat")?.available && (
                       <span className="inline-flex items-center gap-1"><ArmchairIcon className="h-3 w-3" />Window</span>
                     )}
