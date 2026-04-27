@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DesksIndexRouteImport } from './routes/desks.index'
+import { Route as DesksDeskIdRouteImport } from './routes/desks.$deskId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const DesksIndexRoute = DesksIndexRouteImport.update({
   path: '/desks/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DesksDeskIdRoute = DesksDeskIdRouteImport.update({
+  id: '/desks/$deskId',
+  path: '/desks/$deskId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/desks/$deskId': typeof DesksDeskIdRoute
   '/desks/': typeof DesksIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/desks/$deskId': typeof DesksDeskIdRoute
   '/desks': typeof DesksIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/desks/$deskId': typeof DesksDeskIdRoute
   '/desks/': typeof DesksIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/desks/'
+  fullPaths: '/' | '/desks/$deskId' | '/desks/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/desks'
-  id: '__root__' | '/' | '/desks/'
+  to: '/' | '/desks/$deskId' | '/desks'
+  id: '__root__' | '/' | '/desks/$deskId' | '/desks/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DesksDeskIdRoute: typeof DesksDeskIdRoute
   DesksIndexRoute: typeof DesksIndexRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DesksIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/desks/$deskId': {
+      id: '/desks/$deskId'
+      path: '/desks/$deskId'
+      fullPath: '/desks/$deskId'
+      preLoaderRoute: typeof DesksDeskIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DesksDeskIdRoute: DesksDeskIdRoute,
   DesksIndexRoute: DesksIndexRoute,
 }
 export const routeTree = rootRouteImport
