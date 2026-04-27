@@ -14,6 +14,7 @@ import { Route as RoomsIndexRouteImport } from './routes/rooms.index'
 import { Route as DesksIndexRouteImport } from './routes/desks.index'
 import { Route as RoomsRoomIdRouteImport } from './routes/rooms.$roomId'
 import { Route as DesksDeskIdRouteImport } from './routes/desks.$deskId'
+import { Route as BookingItemTypeItemIdRouteImport } from './routes/booking.$itemType.$itemId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +41,11 @@ const DesksDeskIdRoute = DesksDeskIdRouteImport.update({
   path: '/desks/$deskId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingItemTypeItemIdRoute = BookingItemTypeItemIdRouteImport.update({
+  id: '/booking/$itemType/$itemId',
+  path: '/booking/$itemType/$itemId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/rooms/$roomId': typeof RoomsRoomIdRoute
   '/desks/': typeof DesksIndexRoute
   '/rooms/': typeof RoomsIndexRoute
+  '/booking/$itemType/$itemId': typeof BookingItemTypeItemIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/rooms/$roomId': typeof RoomsRoomIdRoute
   '/desks': typeof DesksIndexRoute
   '/rooms': typeof RoomsIndexRoute
+  '/booking/$itemType/$itemId': typeof BookingItemTypeItemIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,12 +70,25 @@ export interface FileRoutesById {
   '/rooms/$roomId': typeof RoomsRoomIdRoute
   '/desks/': typeof DesksIndexRoute
   '/rooms/': typeof RoomsIndexRoute
+  '/booking/$itemType/$itemId': typeof BookingItemTypeItemIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/desks/$deskId' | '/rooms/$roomId' | '/desks/' | '/rooms/'
+  fullPaths:
+    | '/'
+    | '/desks/$deskId'
+    | '/rooms/$roomId'
+    | '/desks/'
+    | '/rooms/'
+    | '/booking/$itemType/$itemId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/desks/$deskId' | '/rooms/$roomId' | '/desks' | '/rooms'
+  to:
+    | '/'
+    | '/desks/$deskId'
+    | '/rooms/$roomId'
+    | '/desks'
+    | '/rooms'
+    | '/booking/$itemType/$itemId'
   id:
     | '__root__'
     | '/'
@@ -75,6 +96,7 @@ export interface FileRouteTypes {
     | '/rooms/$roomId'
     | '/desks/'
     | '/rooms/'
+    | '/booking/$itemType/$itemId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -83,6 +105,7 @@ export interface RootRouteChildren {
   RoomsRoomIdRoute: typeof RoomsRoomIdRoute
   DesksIndexRoute: typeof DesksIndexRoute
   RoomsIndexRoute: typeof RoomsIndexRoute
+  BookingItemTypeItemIdRoute: typeof BookingItemTypeItemIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +145,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DesksDeskIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/booking/$itemType/$itemId': {
+      id: '/booking/$itemType/$itemId'
+      path: '/booking/$itemType/$itemId'
+      fullPath: '/booking/$itemType/$itemId'
+      preLoaderRoute: typeof BookingItemTypeItemIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -131,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   RoomsRoomIdRoute: RoomsRoomIdRoute,
   DesksIndexRoute: DesksIndexRoute,
   RoomsIndexRoute: RoomsIndexRoute,
+  BookingItemTypeItemIdRoute: BookingItemTypeItemIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
