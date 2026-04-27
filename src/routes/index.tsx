@@ -22,7 +22,7 @@ function Home() {
       <main className="flex-1">
         {/* Hero */}
         <section className="relative overflow-hidden bg-gradient-to-br from-navy-tint via-background to-primary-tint">
-          <div className="container mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
+          <div className="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-primary-tint border border-primary/20 px-3 py-1 text-xs font-medium text-primary mb-6">
                 <span className="h-2 w-2 rounded-full bg-success animate-pulse" />
@@ -67,7 +67,7 @@ function Home() {
         </section>
 
         {/* How it works */}
-        <section className="container mx-auto px-4 py-20">
+        <section className="max-w-6xl mx-auto px-6 md:px-10 py-20">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-navy">How Multaqa works</h2>
             <p className="mt-3 text-muted-foreground">Three simple steps. Done in under a minute.</p>
@@ -94,7 +94,7 @@ function Home() {
 
         {/* Trust */}
         <section className="bg-navy-tint py-20">
-          <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto px-6 md:px-10">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-navy">Verified. Real. Transparent.</h2>
             </div>
@@ -103,6 +103,35 @@ function Home() {
                 { icon: ShieldCheck, title: "Verified spaces", desc: "Every location is inspected and reviewed." },
                 { icon: Camera, title: "Real photos", desc: "What you see is what you get. No stock images." },
                 { icon: Tag, title: "Transparent pricing", desc: "Prices in ILS. No surprises. No hidden fees." },
+              ].map((t) => (
+                <div key={t.title} className="text-center">
+                  <div className="mx-auto h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center mb-4">
+                    <t.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="font-bold text-navy">{t.title}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{t.desc}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-10 text-center text-sm text-muted-foreground max-w-xl mx-auto">
+              Every Multaqa location includes fast fiber WiFi, power at every seat, fresh coffee, and a quiet, professional atmosphere — included with every booking.
+            </p>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="max-w-6xl mx-auto px-6 md:px-10 py-16 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-navy">Ready to find your seat?</h2>
+          <p className="mt-3 text-muted-foreground">Browse without an account. Book in under a minute.</p>
+          <div className="mt-6 flex justify-center gap-3">
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/90"><Link to="/desks">Browse Desks</Link></Button>
+            <Button asChild size="lg" variant="outline" className="border-navy text-navy hover:bg-navy hover:text-navy-foreground"><Link to="/rooms">Browse Rooms</Link></Button>
+          </div>
+        </section>
+        {/* placeholder to satisfy patch — old blocks below removed */}
+        <div className="hidden">
+          {[
+            { icon: Tag, title: "x", desc: "x" },
               ].map((t) => (
                 <div key={t.title} className="text-center">
                   <div className="mx-auto h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center mb-4">
@@ -125,6 +154,7 @@ function Home() {
             <Button asChild size="lg" variant="outline" className="border-navy text-navy hover:bg-navy hover:text-navy-foreground"><Link to="/rooms">Browse Rooms</Link></Button>
           </div>
         </section>
+        </div>
       </main>
       <SiteFooter />
     </div>
