@@ -1,10 +1,12 @@
 import { createFileRoute, Link, useParams, notFound } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteHeader } from "@/components/multaqa/SiteHeader";
 import { SiteFooter } from "@/components/multaqa/SiteFooter";
 import { StatusBadge, ZoneBadge } from "@/components/multaqa/LocationToggle";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { getDesk, locationAddress } from "@/lib/multaqa/data";
-import { Wifi, Check, X, MessageCircle, Star, MapPin, ArrowLeft } from "lucide-react";
+import { Check, X, MessageCircle, Star, MapPin, ArrowLeft, ChevronLeft, ChevronRight, Info } from "lucide-react";
 
 export const Route = createFileRoute("/desks/$deskId")({
   head: ({ params }) => {
@@ -24,6 +26,14 @@ function DeskDetail() {
   const { deskId } = useParams({ from: "/desks/$deskId" });
   const desk = getDesk(deskId);
   if (!desk) throw notFound();
+  const [photoIdx, setPhotoIdx] = useState(0);
+  const photos = desk.images && desk.images.length ? desk.images : [desk.image];
+
+  const typeExplanation: Record<string, string> = {
+    "Flex Desk": "Flex Desk — any open desk in the shared area. First-come within your booked slot.",
+    "Hot Desk": "Hot Desk — any available desk for the day. Pick what's free when you arrive.",
+    "Dedicated Desk": "Dedicated Desk — your own assigned desk, reserved for your use only.",
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -35,25 +45,65 @@ function DeskDetail() {
 
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <div className="rounded-xl overflow-hidden border border-border bg-muted aspect-[16/10]">
-              <img src={desk.image} alt={desk.name} className="h-full w-full object-cover" width={1024} height={640} />
+            <div className="relative rounded-xl overflow-hidden border border-border bg-muted aspect-[16/10] group">
+              <img src={photos[photoIdx]} alt={`${desk.name} — photo ${photoIdx + 1}`} className="h-full w-full object-cover" width={1024} height={640} />
+              {photos.length > 1 && (
+                <>
+                  <button
+                    onClick={() => setPhotoIdx((i) => (i - 1 + photos.length) % photos.length)}
+                    aria-label="Previous photo"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-background/85 backdrop-blur-sm shadow flex items-center justify-center text-navy hover:bg-background"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => setPhotoIdx((i) => (i + 1) % photos.length)}
+                    aria-label="Next photo"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 h-9 w-9 rounded-full bg-background/85 backdrop-blur-sm shadow flex items-center justify-center text-navy hover:bg-background"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                    {photos.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setPhotoIdx(i)}
+                        aria-label={`Go to photo ${i + 1}`}
+                        className={`h-2 rounded-full transition-all ${i === photoIdx ? "w-6 bg-white" : "w-2 bg-white/60"}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
+            {photos.length > 1 && (
+              <div className="mt-2 flex gap-2 overflow-x-auto">
+                {photos.map((p, i) => (
+                  <button key={i} onClick={() => setPhotoIdx(i)} className={`h-16 w-20 shrink-0 rounded-md overflow-hidden border-2 transition ${i === photoIdx ? "border-primary" : "border-transparent opacity-70 hover:opacity-100"}`}>
+                    <img src={p} alt="" className="h-full w-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <h1 className="text-3xl font-bold text-navy">{desk.name}</h1>
-              <span className="text-sm px-2 py-1 rounded-full bg-muted text-muted-foreground">{desk.type}</span>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button className="text-sm px-2 py-1 rounded-full bg-navy-tint text-navy inline-flex items-center gap-1 hover:bg-navy/10 transition-colors">
+                    {desk.type} <Info className="h-3 w-3 opacity-70" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="text-sm max-w-xs">
+                  {typeExplanation[desk.type]}
+                </PopoverContent>
+              </Popover>
               <ZoneBadge zone={desk.zone} />
               <StatusBadge status={desk.status} />
             </div>
             <p className="mt-2 text-sm text-muted-foreground inline-flex items-center gap-1">
               <MapPin className="h-3.5 w-3.5" /> {locationAddress[desk.location]}
             </p>
-
-            <div className="mt-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary-tint border border-primary/20 text-sm">
-              <Wifi className="h-4 w-4 text-primary" />
-              <span className="font-semibold text-navy">WiFi: {desk.wifi}</span>
-              <span className="text-muted-foreground">— {desk.wifi === "Fast" ? "200+ Mbps fiber" : desk.wifi === "Good" ? "100 Mbps" : "50 Mbps"}</span>
-            </div>
 
             <div className="mt-8">
               <h2 className="text-xl font-bold text-navy mb-3">Zone</h2>
