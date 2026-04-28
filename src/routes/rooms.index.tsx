@@ -11,13 +11,13 @@ export const Route = createFileRoute("/rooms/")({
   head: () => ({
     meta: [
       { title: "Browse Rooms — Multaqa" },
-      { name: "description", content: "Private offices, meeting rooms, and phone booths in Nablus and Ramallah." },
+      { name: "description", content: "Private offices and meeting rooms in Nablus and Ramallah." },
     ],
   }),
   component: RoomsPage,
 });
 
-const roomTypes: RoomType[] = ["Private Office", "Meeting Room", "Phone Booth"];
+const roomTypes: RoomType[] = ["Private Office", "Meeting Room"];
 
 function RoomsPage() {
   const [location, setLocation] = useState<Location>("Nablus");
@@ -56,11 +56,11 @@ function RoomsPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
-      <main className="flex-1 container mx-auto px-4 py-8">
+      <main className="flex-1 max-w-6xl mx-auto px-6 md:px-10 py-8 w-full">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>
             <h1 className="text-3xl font-bold text-navy">Browse Rooms</h1>
-            <p className="text-sm text-muted-foreground mt-1">Private offices, meeting rooms, and phone booths.</p>
+            <p className="text-sm text-muted-foreground mt-1">Private offices and meeting rooms.</p>
           </div>
           <LocationToggle value={location} onChange={setLocation} />
         </div>
@@ -105,8 +105,8 @@ function RoomsPage() {
                     <h3 className="font-semibold text-navy">{r.name}</h3>
                     <span className="text-xs px-2 py-0.5 rounded-full bg-navy-tint text-navy">{r.type}</span>
                   </div>
-                  <div className="mt-2 inline-flex items-center gap-1 text-xs text-muted-foreground">
-                    <Users className="h-3 w-3" /> Up to {r.capacity} {r.capacity === 1 ? "person" : "people"}
+                  <div className="mt-3 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Users className="h-3.5 w-3.5" /> Up to {r.capacity} {r.capacity === 1 ? "person" : "people"}
                   </div>
                   <div className="mt-3 flex items-center justify-between">
                     <div className="text-sm">
