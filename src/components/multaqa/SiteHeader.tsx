@@ -26,7 +26,18 @@ export function SiteHeader() {
         <nav className="hidden md:flex items-center gap-8">
           <Link to="/desks" className={navLink} activeProps={activeNav}>Browse Desks</Link>
           <Link to="/rooms" className={navLink} activeProps={activeNav}>Browse Rooms</Link>
-          <Link to="/whos-here" className={navLink} activeProps={activeNav}>Who's Here Today</Link>
+          {user ? (
+            <Link to="/whos-here" className={navLink} activeProps={activeNav}>Who's Here Today</Link>
+          ) : (
+            <Link
+              to="/login"
+              search={{ redirect: "/whos-here" } as never}
+              className={navLink}
+              title="Log in to see who's in the space today"
+            >
+              Who's Here Today
+            </Link>
+          )}
         </nav>
         <div className="hidden md:flex items-center gap-3">
           {user ? (
@@ -73,7 +84,11 @@ export function SiteHeader() {
         <div className="md:hidden border-t border-border bg-background px-4 py-3 space-y-2">
           <Link to="/desks" className="block py-2 text-navy" onClick={() => setOpen(false)}>Browse Desks</Link>
           <Link to="/rooms" className="block py-2 text-navy" onClick={() => setOpen(false)}>Browse Rooms</Link>
-          <Link to="/whos-here" className="block py-2 text-navy" onClick={() => setOpen(false)}>Who's Here Today</Link>
+          {user ? (
+            <Link to="/whos-here" className="block py-2 text-navy" onClick={() => setOpen(false)}>Who's Here Today</Link>
+          ) : (
+            <Link to="/login" className="block py-2 text-navy" onClick={() => setOpen(false)}>Who's Here Today</Link>
+          )}
           {user ? (
             <>
               <Link to="/my-bookings" className="block py-2 text-navy" onClick={() => setOpen(false)}>My Bookings</Link>
