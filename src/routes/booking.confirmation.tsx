@@ -14,6 +14,7 @@ interface Search {
   duration: string;
   total: number;
   email: string;
+  deadline: string;
 }
 
 export const Route = createFileRoute("/booking/confirmation")({
@@ -26,6 +27,7 @@ export const Route = createFileRoute("/booking/confirmation")({
     duration: String(s.duration ?? "Half-day"),
     total: Number(s.total ?? 50),
     email: String(s.email ?? "you@example.com"),
+    deadline: String(s.deadline ?? ""),
   }),
   component: Confirmation,
 });
@@ -34,10 +36,12 @@ function Confirmation() {
   const s = Route.useSearch();
   const { user } = useAuth();
 
-  // payment deadline = today + 3 days
-  const deadline = new Date();
-  deadline.setDate(deadline.getDate() + 3);
-  const deadlineStr = deadline.toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" });
+  // Cash deadline = earliest booked date + 3 days, computed at booking time and passed in
+  const deadlineStr = s.deadline || (() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 3);
+    return d.toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" });
+  })();
 
   return (
     <div className="min-h-screen flex flex-col bg-muted/30">

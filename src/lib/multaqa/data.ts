@@ -5,6 +5,8 @@ import deskStanding from "@/assets/desk-standing.jpg";
 import roomFocus from "@/assets/room-focus.jpg";
 import roomMeeting from "@/assets/room-meeting.jpg";
 import roomPod from "@/assets/room-pod.jpg";
+import officeSolo from "@/assets/office-solo.jpg";
+import officeDuo from "@/assets/office-duo.jpg";
 
 export type Location = "Nablus" | "Ramallah";
 export type Zone = "Deep Work" | "Calls Allowed";
@@ -89,15 +91,15 @@ export const rooms: Room[] = [
   // Nablus
   { id: "n-focus", name: "The Focus Room", location: "Nablus", type: "Meeting Room", capacity: 4, status: "Available", pricePerHour: 40, priceHalfDay: 140, image: roomFocus, images: [roomFocus], equipment: roomEquip(), reviews: sharedReviews },
   { id: "n-mtg1", name: "Meeting Room 1", location: "Nablus", type: "Meeting Room", capacity: 8, status: "Available", pricePerHour: 60, priceHalfDay: 200, image: roomMeeting, images: [roomMeeting], equipment: roomEquip(), reviews: sharedReviews },
-  { id: "n-mtg3", name: "Meeting Room 3", location: "Nablus", type: "Meeting Room", capacity: 6, status: "Available", pricePerHour: 50, priceHalfDay: 170, image: roomMeeting, images: [roomMeeting], equipment: roomEquip(), reviews: sharedReviews },
-  { id: "n-po-solo", name: "Private Office — Solo", location: "Nablus", type: "Private Office", capacity: 1, status: "Available", pricePerHour: 30, priceHalfDay: 100, image: roomPod, images: [roomPod], equipment: roomEquip({ whiteboard: false, display: false }), reviews: sharedReviews },
-  { id: "n-po-2", name: "Private Office — 2 People", location: "Nablus", type: "Private Office", capacity: 2, status: "Available", pricePerHour: 45, priceHalfDay: 150, image: roomPod, images: [roomPod], equipment: roomEquip({ whiteboard: false }), reviews: sharedReviews },
+  { id: "n-mtg3", name: "Meeting Room 2", location: "Nablus", type: "Meeting Room", capacity: 6, status: "Available", pricePerHour: 50, priceHalfDay: 170, image: roomMeeting, images: [roomMeeting], equipment: roomEquip(), reviews: sharedReviews },
+  { id: "n-po-solo", name: "Private Office — Solo", location: "Nablus", type: "Private Office", capacity: 1, status: "Available", pricePerHour: 30, priceHalfDay: 100, image: officeSolo, images: [officeSolo], equipment: roomEquip({ whiteboard: false, display: false }), reviews: sharedReviews },
+  { id: "n-po-2", name: "Private Office — 2 People", location: "Nablus", type: "Private Office", capacity: 2, status: "Available", pricePerHour: 45, priceHalfDay: 150, image: officeDuo, images: [officeDuo], equipment: roomEquip({ whiteboard: false }), reviews: sharedReviews },
   { id: "n-po-4", name: "Private Office — Team", location: "Nablus", type: "Private Office", capacity: 4, status: "Reserved", pricePerHour: 70, priceHalfDay: 240, image: roomFocus, images: [roomFocus], equipment: roomEquip(), reviews: sharedReviews },
   { id: "n-exec", name: "Executive Suite", location: "Nablus", type: "Private Office", capacity: 6, status: "Available", pricePerHour: 80, priceHalfDay: 280, image: roomMeeting, images: [roomMeeting], adminOnly: true, equipment: roomEquip(), reviews: sharedReviews },
   // Ramallah
   { id: "r-mtg2", name: "Meeting Room 2", location: "Ramallah", type: "Meeting Room", capacity: 6, status: "Available", pricePerHour: 50, priceHalfDay: 170, image: roomFocus, images: [roomFocus], equipment: roomEquip(), reviews: sharedReviews },
   { id: "r-mtg4", name: "Meeting Room 4", location: "Ramallah", type: "Meeting Room", capacity: 10, status: "Available", pricePerHour: 75, priceHalfDay: 260, image: roomMeeting, images: [roomMeeting], equipment: roomEquip(), reviews: sharedReviews },
-  { id: "r-po-solo", name: "Private Office — Solo", location: "Ramallah", type: "Private Office", capacity: 1, status: "Available", pricePerHour: 30, priceHalfDay: 100, image: roomPod, images: [roomPod], equipment: roomEquip({ whiteboard: false, display: false }), reviews: sharedReviews },
+  { id: "r-po-solo", name: "Private Office — Solo", location: "Ramallah", type: "Private Office", capacity: 1, status: "Available", pricePerHour: 30, priceHalfDay: 100, image: officeSolo, images: [officeSolo], equipment: roomEquip({ whiteboard: false, display: false }), reviews: sharedReviews },
   { id: "r-po-3", name: "Private Office — Trio", location: "Ramallah", type: "Private Office", capacity: 3, status: "Available", pricePerHour: 55, priceHalfDay: 190, image: roomFocus, images: [roomFocus], equipment: roomEquip(), reviews: sharedReviews },
   { id: "r-po-5", name: "Private Office — Team", location: "Ramallah", type: "Private Office", capacity: 5, status: "Available", pricePerHour: 75, priceHalfDay: 260, image: roomMeeting, images: [roomMeeting], equipment: roomEquip(), reviews: sharedReviews },
 ];

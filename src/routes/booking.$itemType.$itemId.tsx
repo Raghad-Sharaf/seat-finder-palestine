@@ -61,11 +61,15 @@ function BookingFlow() {
   }, [earliest]);
   const deadlineStr = deadline.toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" });
 
+  // Sorted dates string for the confirmation page (e.g. "May 2, May 5, May 9 2026")
+  const sortedDates = [...dates].sort((a, b) => a.getTime() - b.getTime());
+  const fmtDate = (d: Date) => d.toLocaleDateString("en", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+  const fmtDateShort = (d: Date) => d.toLocaleDateString("en", { month: "short", day: "numeric" });
   const datesLabel = dayCount === 0
     ? "Pick at least one date"
     : dayCount === 1
-    ? earliest!.toLocaleDateString("en", { weekday: "short", month: "short", day: "numeric", year: "numeric" })
-    : `${dayCount} days selected`;
+    ? fmtDate(sortedDates[0])
+    : `${sortedDates.map(fmtDateShort).join(" · ")}, ${sortedDates[sortedDates.length - 1].getFullYear()}`;
   const slotLabel = hours > 0 ? `${fmt(startHour!)} – ${fmt(endHour!)}` : "";
 
   const confirm = () => {
@@ -87,6 +91,7 @@ function BookingFlow() {
         duration: hours >= 8 ? `Full day × ${dayCount}` : `${hours}h × ${dayCount} ${dayCount === 1 ? "day" : "days"}`,
         total: price,
         email,
+        deadline: deadlineStr,
       },
     });
   };
