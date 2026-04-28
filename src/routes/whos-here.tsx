@@ -16,8 +16,6 @@ function WhosHere() {
   const [location, setLocation] = useState<Location>("Nablus");
   const [showName, setShowName] = useState(true);
 
-  if (!user) return <Navigate to="/login" />;
-
   const members = todaysMembers.filter((m) => m.location === location);
   const today = new Date().toLocaleDateString("en", { weekday: "long", month: "long", day: "numeric" });
 
