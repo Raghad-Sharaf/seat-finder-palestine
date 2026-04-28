@@ -33,7 +33,7 @@ function Home() {
                 <span className="text-primary">Secured.</span>
               </h1>
               <p className="mt-5 text-lg text-muted-foreground max-w-md">
-                Browse real desks and rooms, check live availability, and lock in your spot before you leave home. No more walk-in surprises.
+                Browse real desks and rooms, check live availability, and lock in your spot before you leave home. No more walk-in surprises
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button asChild size="lg" className="bg-primary hover:bg-primary/90 h-12 px-6 text-base">
@@ -70,13 +70,13 @@ function Home() {
         <section className="max-w-6xl mx-auto px-6 md:px-10 py-20">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-navy">How Multaqa works</h2>
-            <p className="mt-3 text-muted-foreground">Three simple steps. Done in under a minute.</p>
+            <p className="mt-3 text-muted-foreground">Three simple steps. Done in under a minute</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: Search, title: "Browse", desc: "See real desks and rooms with photos, amenities, and live availability." },
-              { icon: Calendar, title: "Book", desc: "Pick your date and slot. Pay online or settle in cash on arrival." },
-              { icon: CheckCircle2, title: "Arrive", desc: "Walk in with confidence. Your seat is reserved and waiting." },
+              { icon: Search, title: "Browse", desc: "See real desks and rooms with photos, amenities, and live availability" },
+              { icon: Calendar, title: "Book", desc: "Pick your date and slot. Pay online or settle in cash on arrival" },
+              { icon: CheckCircle2, title: "Arrive", desc: "Walk in with confidence. Your seat is reserved and waiting" },
             ].map((s, i) => (
               <div key={s.title} className="rounded-xl border border-border bg-card p-6 hover:border-primary hover:shadow-lg transition-all">
                 <div className="flex items-center gap-3 mb-3">
@@ -100,9 +100,9 @@ function Home() {
             </div>
             <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {[
-                { icon: ShieldCheck, title: "Verified spaces", desc: "Every location is inspected and reviewed." },
-                { icon: Camera, title: "Real photos", desc: "What you see is what you get. No stock images." },
-                { icon: Tag, title: "Transparent pricing", desc: "Prices in ILS. No surprises. No hidden fees." },
+                { icon: ShieldCheck, title: "Verified spaces", desc: "Every space is inspected and reviewed" },
+                { icon: Camera, title: "Real photos", desc: "What you see is what you get. No stock images" },
+                { icon: Tag, title: "Transparent pricing", desc: "Prices in ILS. No surprises. No hidden fees" },
               ].map((t) => (
                 <div key={t.title} className="text-center">
                   <div className="mx-auto h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center mb-4">
@@ -114,15 +114,15 @@ function Home() {
               ))}
             </div>
             <p className="mt-10 text-center text-sm text-muted-foreground max-w-xl mx-auto">
-              Every Multaqa location includes fast fiber WiFi, power at every seat, fresh coffee, and a quiet, professional atmosphere — included with every booking.
+              Every Multaqa space includes fast fiber WiFi, power at every seat, fresh coffee, and a quiet, professional atmosphere — included with every booking
             </p>
           </div>
         </section>
 
         {/* CTA */}
-        <section className="max-w-6xl mx-auto px-6 md:px-10 py-16 text-center">
+        <section className="max-w-6xl mx-auto px-6 md:px-10 py-24 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-navy">Ready to find your seat?</h2>
-          <p className="mt-3 text-muted-foreground">Browse without an account. Book in under a minute.</p>
+          <p className="mt-3 text-muted-foreground">Browse without an account. Book in under a minute</p>
           <div className="mt-6 flex justify-center gap-3">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90"><Link to="/desks">Browse Desks</Link></Button>
             <Button asChild size="lg" variant="outline" className="border-navy text-navy hover:bg-navy hover:text-navy-foreground"><Link to="/rooms">Browse Rooms</Link></Button>

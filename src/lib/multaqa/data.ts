@@ -27,7 +27,7 @@ export interface Desk {
   reviews: { author: string; date: string; rating: number; comment: string }[];
 }
 
-export type RoomType = "Private Office" | "Meeting Room" | "Phone Booth";
+export type RoomType = "Private Office" | "Meeting Room";
 
 export interface Room {
   id: string;
@@ -59,27 +59,21 @@ const deskAmenities = (mods: Partial<Record<string, boolean>> = {}) => [
   { label: "Phone locker", available: mods.locker ?? false },
 ];
 
-const deskGallery = [deskFocus, deskWindow, deskHot, deskStanding];
-const focusGallery = [deskFocus, deskWindow, deskStanding];
-const windowGallery = [deskWindow, deskFocus, deskStanding];
-const hotGallery = [deskHot, deskFocus, deskStanding];
-const standGallery = [deskStanding, deskFocus, deskWindow];
-
 export const desks: Desk[] = [
-  { id: "n-a1", name: "Desk A-1", location: "Nablus", type: "Flex Desk", zone: "Deep Work", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskFocus, images: focusGallery, amenities: deskAmenities({ monitor: true }), reviews: sharedReviews },
-  { id: "n-a2", name: "Desk A-2", location: "Nablus", type: "Flex Desk", zone: "Deep Work", status: "Reserved", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskFocus, images: focusGallery, amenities: deskAmenities(), reviews: sharedReviews },
-  { id: "n-a3", name: "Window Seat A-3", location: "Nablus", type: "Dedicated Desk", zone: "Deep Work", status: "Available", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskWindow, images: windowGallery, amenities: deskAmenities({ window: true, monitor: true }), reviews: sharedReviews },
-  { id: "n-a4", name: "Desk A-4", location: "Nablus", type: "Hot Desk", zone: "Calls Allowed", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskHot, images: hotGallery, amenities: deskAmenities({ locker: true }), reviews: sharedReviews },
-  { id: "n-a5", name: "Desk A-5", location: "Nablus", type: "Hot Desk", zone: "Calls Allowed", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskHot, images: hotGallery, amenities: deskAmenities(), reviews: sharedReviews },
-  { id: "n-a6", name: "Standing Desk A-6", location: "Nablus", type: "Flex Desk", zone: "Calls Allowed", status: "Reserved", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskStanding, images: standGallery, amenities: deskAmenities({ standing: true, monitor: true }), reviews: sharedReviews },
-  { id: "n-a7", name: "Window Seat A-7", location: "Nablus", type: "Dedicated Desk", zone: "Deep Work", status: "Available", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskWindow, images: windowGallery, amenities: deskAmenities({ window: true }), reviews: sharedReviews },
-  { id: "n-a8", name: "Desk A-8", location: "Nablus", type: "Hot Desk", zone: "Calls Allowed", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskHot, images: hotGallery, amenities: deskAmenities(), reviews: sharedReviews },
-  { id: "r-b1", name: "Desk B-1", location: "Ramallah", type: "Flex Desk", zone: "Deep Work", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskFocus, images: focusGallery, amenities: deskAmenities({ monitor: true }), reviews: sharedReviews },
-  { id: "r-b2", name: "Window Seat B-2", location: "Ramallah", type: "Dedicated Desk", zone: "Deep Work", status: "Available", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskWindow, images: windowGallery, amenities: deskAmenities({ window: true, monitor: true }), reviews: sharedReviews },
-  { id: "r-b3", name: "Desk B-3", location: "Ramallah", type: "Hot Desk", zone: "Calls Allowed", status: "Reserved", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskHot, images: hotGallery, amenities: deskAmenities(), reviews: sharedReviews },
-  { id: "r-b4", name: "Desk B-4", location: "Ramallah", type: "Flex Desk", zone: "Calls Allowed", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskHot, images: hotGallery, amenities: deskAmenities({ locker: true }), reviews: sharedReviews },
-  { id: "r-b5", name: "Standing Desk B-5", location: "Ramallah", type: "Flex Desk", zone: "Calls Allowed", status: "Available", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskStanding, images: standGallery, amenities: deskAmenities({ standing: true }), reviews: sharedReviews },
-  { id: "r-b6", name: "Desk B-6", location: "Ramallah", type: "Dedicated Desk", zone: "Deep Work", status: "Available", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskFocus, images: [deskFocus, deskWindow, deskStanding, ...deskGallery.slice(0,1)], amenities: deskAmenities({ monitor: true, window: true }), reviews: sharedReviews },
+  { id: "n-a1", name: "Desk A-1", location: "Nablus", type: "Flex Desk", zone: "Deep Work", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskFocus, images: [deskFocus], amenities: deskAmenities({ monitor: true }), reviews: sharedReviews },
+  { id: "n-a2", name: "Desk A-2", location: "Nablus", type: "Flex Desk", zone: "Deep Work", status: "Reserved", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskFocus, images: [deskFocus], amenities: deskAmenities(), reviews: sharedReviews },
+  { id: "n-a3", name: "Window Seat A-3", location: "Nablus", type: "Dedicated Desk", zone: "Deep Work", status: "Available", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskWindow, images: [deskWindow], amenities: deskAmenities({ window: true, monitor: true }), reviews: sharedReviews },
+  { id: "n-a4", name: "Desk A-4", location: "Nablus", type: "Hot Desk", zone: "Calls Allowed", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskHot, images: [deskHot], amenities: deskAmenities({ locker: true }), reviews: sharedReviews },
+  { id: "n-a5", name: "Desk A-5", location: "Nablus", type: "Hot Desk", zone: "Calls Allowed", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskHot, images: [deskHot], amenities: deskAmenities(), reviews: sharedReviews },
+  { id: "n-a6", name: "Standing Desk A-6", location: "Nablus", type: "Flex Desk", zone: "Calls Allowed", status: "Reserved", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskStanding, images: [deskStanding], amenities: deskAmenities({ standing: true, monitor: true }), reviews: sharedReviews },
+  { id: "n-a7", name: "Window Seat A-7", location: "Nablus", type: "Dedicated Desk", zone: "Deep Work", status: "Available", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskWindow, images: [deskWindow], amenities: deskAmenities({ window: true }), reviews: sharedReviews },
+  { id: "n-a8", name: "Desk A-8", location: "Nablus", type: "Hot Desk", zone: "Calls Allowed", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskHot, images: [deskHot], amenities: deskAmenities(), reviews: sharedReviews },
+  { id: "r-b1", name: "Desk B-1", location: "Ramallah", type: "Flex Desk", zone: "Deep Work", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskFocus, images: [deskFocus], amenities: deskAmenities({ monitor: true }), reviews: sharedReviews },
+  { id: "r-b2", name: "Window Seat B-2", location: "Ramallah", type: "Dedicated Desk", zone: "Deep Work", status: "Available", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskWindow, images: [deskWindow], amenities: deskAmenities({ window: true, monitor: true }), reviews: sharedReviews },
+  { id: "r-b3", name: "Desk B-3", location: "Ramallah", type: "Hot Desk", zone: "Calls Allowed", status: "Reserved", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskHot, images: [deskHot], amenities: deskAmenities(), reviews: sharedReviews },
+  { id: "r-b4", name: "Desk B-4", location: "Ramallah", type: "Flex Desk", zone: "Calls Allowed", status: "Available", pricePerHour: 15, priceHalfDay: 50, priceFullDay: 85, image: deskHot, images: [deskHot], amenities: deskAmenities({ locker: true }), reviews: sharedReviews },
+  { id: "r-b5", name: "Standing Desk B-5", location: "Ramallah", type: "Flex Desk", zone: "Calls Allowed", status: "Available", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskStanding, images: [deskStanding], amenities: deskAmenities({ standing: true }), reviews: sharedReviews },
+  { id: "r-b6", name: "Desk B-6", location: "Ramallah", type: "Dedicated Desk", zone: "Deep Work", status: "Available", pricePerHour: 18, priceHalfDay: 60, priceFullDay: 100, image: deskFocus, images: [deskFocus], amenities: deskAmenities({ monitor: true, window: true }), reviews: sharedReviews },
 ];
 
 const roomEquip = (mods: Partial<Record<string, boolean>> = {}) => [
@@ -91,17 +85,21 @@ const roomEquip = (mods: Partial<Record<string, boolean>> = {}) => [
   { label: "Soundproofed", available: mods.sound ?? true },
 ];
 
-const meetingGallery = [roomMeeting, roomFocus, roomPod];
-const focusRoomGallery = [roomFocus, roomMeeting, roomPod];
-const podGallery = [roomPod, roomFocus, roomMeeting];
-
 export const rooms: Room[] = [
-  { id: "n-focus", name: "The Focus Room", location: "Nablus", type: "Meeting Room", capacity: 4, status: "Available", pricePerHour: 40, priceHalfDay: 140, image: roomFocus, images: focusRoomGallery, equipment: roomEquip(), reviews: sharedReviews },
-  { id: "n-mtg1", name: "Meeting Room 1", location: "Nablus", type: "Meeting Room", capacity: 8, status: "Available", pricePerHour: 60, priceHalfDay: 200, image: roomMeeting, images: meetingGallery, equipment: roomEquip(), reviews: sharedReviews },
-  { id: "n-pod", name: "The Pod", location: "Nablus", type: "Phone Booth", capacity: 2, status: "Reserved", pricePerHour: 25, priceHalfDay: 80, image: roomPod, images: podGallery, equipment: roomEquip({ whiteboard: false, display: false }), reviews: sharedReviews },
-  { id: "n-exec", name: "Executive Suite", location: "Nablus", type: "Private Office", capacity: 6, status: "Available", pricePerHour: 80, priceHalfDay: 280, image: roomMeeting, images: meetingGallery, adminOnly: true, equipment: roomEquip(), reviews: sharedReviews },
-  { id: "r-mtg2", name: "Meeting Room 2", location: "Ramallah", type: "Meeting Room", capacity: 6, status: "Available", pricePerHour: 50, priceHalfDay: 170, image: roomFocus, images: focusRoomGallery, equipment: roomEquip(), reviews: sharedReviews },
-  { id: "r-pod", name: "Quiet Pod", location: "Ramallah", type: "Phone Booth", capacity: 1, status: "Available", pricePerHour: 25, priceHalfDay: 80, image: roomPod, images: podGallery, equipment: roomEquip({ whiteboard: false, display: false }), reviews: sharedReviews },
+  // Nablus
+  { id: "n-focus", name: "The Focus Room", location: "Nablus", type: "Meeting Room", capacity: 4, status: "Available", pricePerHour: 40, priceHalfDay: 140, image: roomFocus, images: [roomFocus], equipment: roomEquip(), reviews: sharedReviews },
+  { id: "n-mtg1", name: "Meeting Room 1", location: "Nablus", type: "Meeting Room", capacity: 8, status: "Available", pricePerHour: 60, priceHalfDay: 200, image: roomMeeting, images: [roomMeeting], equipment: roomEquip(), reviews: sharedReviews },
+  { id: "n-mtg3", name: "Meeting Room 3", location: "Nablus", type: "Meeting Room", capacity: 6, status: "Available", pricePerHour: 50, priceHalfDay: 170, image: roomMeeting, images: [roomMeeting], equipment: roomEquip(), reviews: sharedReviews },
+  { id: "n-po-solo", name: "Private Office — Solo", location: "Nablus", type: "Private Office", capacity: 1, status: "Available", pricePerHour: 30, priceHalfDay: 100, image: roomPod, images: [roomPod], equipment: roomEquip({ whiteboard: false, display: false }), reviews: sharedReviews },
+  { id: "n-po-2", name: "Private Office — 2 People", location: "Nablus", type: "Private Office", capacity: 2, status: "Available", pricePerHour: 45, priceHalfDay: 150, image: roomPod, images: [roomPod], equipment: roomEquip({ whiteboard: false }), reviews: sharedReviews },
+  { id: "n-po-4", name: "Private Office — Team", location: "Nablus", type: "Private Office", capacity: 4, status: "Reserved", pricePerHour: 70, priceHalfDay: 240, image: roomFocus, images: [roomFocus], equipment: roomEquip(), reviews: sharedReviews },
+  { id: "n-exec", name: "Executive Suite", location: "Nablus", type: "Private Office", capacity: 6, status: "Available", pricePerHour: 80, priceHalfDay: 280, image: roomMeeting, images: [roomMeeting], adminOnly: true, equipment: roomEquip(), reviews: sharedReviews },
+  // Ramallah
+  { id: "r-mtg2", name: "Meeting Room 2", location: "Ramallah", type: "Meeting Room", capacity: 6, status: "Available", pricePerHour: 50, priceHalfDay: 170, image: roomFocus, images: [roomFocus], equipment: roomEquip(), reviews: sharedReviews },
+  { id: "r-mtg4", name: "Meeting Room 4", location: "Ramallah", type: "Meeting Room", capacity: 10, status: "Available", pricePerHour: 75, priceHalfDay: 260, image: roomMeeting, images: [roomMeeting], equipment: roomEquip(), reviews: sharedReviews },
+  { id: "r-po-solo", name: "Private Office — Solo", location: "Ramallah", type: "Private Office", capacity: 1, status: "Available", pricePerHour: 30, priceHalfDay: 100, image: roomPod, images: [roomPod], equipment: roomEquip({ whiteboard: false, display: false }), reviews: sharedReviews },
+  { id: "r-po-3", name: "Private Office — Trio", location: "Ramallah", type: "Private Office", capacity: 3, status: "Available", pricePerHour: 55, priceHalfDay: 190, image: roomFocus, images: [roomFocus], equipment: roomEquip(), reviews: sharedReviews },
+  { id: "r-po-5", name: "Private Office — Team", location: "Ramallah", type: "Private Office", capacity: 5, status: "Available", pricePerHour: 75, priceHalfDay: 260, image: roomMeeting, images: [roomMeeting], equipment: roomEquip(), reviews: sharedReviews },
 ];
 
 export const locationAddress: Record<Location, string> = {

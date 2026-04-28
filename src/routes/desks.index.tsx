@@ -63,7 +63,7 @@ function DesksPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
-      <main className="flex-1 container mx-auto px-4 py-8">
+      <main className="flex-1 max-w-6xl mx-auto px-6 md:px-10 py-8 w-full">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>
             <h1 className="text-3xl font-bold text-navy">Browse Desks</h1>
