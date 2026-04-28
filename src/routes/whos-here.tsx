@@ -5,7 +5,6 @@ import { SiteFooter } from "@/components/multaqa/SiteFooter";
 import { LocationToggle } from "@/components/multaqa/LocationToggle";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { useAuth } from "@/lib/multaqa/auth";
 import { todaysMembers, type Location } from "@/lib/multaqa/data";
 
 export const Route = createFileRoute("/whos-here")({
@@ -14,7 +13,6 @@ export const Route = createFileRoute("/whos-here")({
 });
 
 function WhosHere() {
-  const { user } = useAuth();
   const [location, setLocation] = useState<Location>("Nablus");
   const [showName, setShowName] = useState(true);
 
