@@ -100,17 +100,16 @@ function DesksPage() {
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                   <img src={d.image} alt={d.name} loading="lazy" width={1024} height={768} className="h-full w-full object-cover group-hover:scale-105 transition-transform" />
-                  <div className="absolute top-3 left-3 flex gap-1.5">
+                  {/* Aligned badge row — both badges sit on the same baseline */}
+                  <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2 pointer-events-none">
                     <ZoneBadge zone={d.zone} />
-                  </div>
-                  <div className="absolute top-3 right-3">
                     <StatusBadge status={d.status} />
                   </div>
                 </div>
                 <div className="p-4">
                   <div className="flex items-start justify-between gap-2">
                     <h3 className="font-semibold text-navy">{d.name}</h3>
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">{d.type}</span>
+                    <span className="shrink-0 inline-block w-fit text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground whitespace-nowrap">{d.type}</span>
                   </div>
                   <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
                     <span className="inline-flex items-center gap-1"><Plug className="h-3 w-3" />Power</span>

@@ -61,11 +61,15 @@ function BookingFlow() {
   }, [earliest]);
   const deadlineStr = deadline.toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" });
 
+  // Sorted dates string for the confirmation page (e.g. "May 2, May 5, May 9 2026")
+  const sortedDates = [...dates].sort((a, b) => a.getTime() - b.getTime());
+  const fmtDate = (d: Date) => d.toLocaleDateString("en", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+  const fmtDateShort = (d: Date) => d.toLocaleDateString("en", { month: "short", day: "numeric" });
   const datesLabel = dayCount === 0
     ? "Pick at least one date"
     : dayCount === 1
-    ? earliest!.toLocaleDateString("en", { weekday: "short", month: "short", day: "numeric", year: "numeric" })
-    : `${dayCount} days selected`;
+    ? fmtDate(sortedDates[0])
+    : `${sortedDates.map(fmtDateShort).join(" · ")}, ${sortedDates[sortedDates.length - 1].getFullYear()}`;
   const slotLabel = hours > 0 ? `${fmt(startHour!)} – ${fmt(endHour!)}` : "";
 
   const confirm = () => {
@@ -87,6 +91,7 @@ function BookingFlow() {
         duration: hours >= 8 ? `Full day × ${dayCount}` : `${hours}h × ${dayCount} ${dayCount === 1 ? "day" : "days"}`,
         total: price,
         email,
+        deadline: deadlineStr,
       },
     });
   };
@@ -128,6 +133,7 @@ function BookingFlow() {
                     <span>{conflictError}</span>
                   </div>
                 )}
+                <div className="grid md:grid-cols-2 gap-5 items-start">
                 <div className="rounded-xl border border-border bg-card p-6">
                   <h2 className="text-lg font-bold text-navy flex items-center gap-2 mb-4">
                     <CalendarIcon className="h-5 w-5 text-primary" /> Pick your date(s)
@@ -135,15 +141,17 @@ function BookingFlow() {
                   <p className="text-xs text-muted-foreground mb-3">
                     Tap one or more days. You can book up to one month ahead.
                   </p>
-                  <Calendar
-                    mode="multiple"
-                    selected={dates}
-                    onSelect={(d) => setDates(d ?? [])}
-                    disabled={{ before: today, after: maxDate }}
-                    fromDate={today}
-                    toDate={maxDate}
-                    className="p-3 pointer-events-auto"
-                  />
+                  <div className="flex justify-center">
+                    <Calendar
+                      mode="multiple"
+                      selected={dates}
+                      onSelect={(d) => setDates(d ?? [])}
+                      disabled={{ before: today, after: maxDate }}
+                      fromDate={today}
+                      toDate={maxDate}
+                      className="p-2 pointer-events-auto"
+                    />
+                  </div>
                   {dayCount > 0 && (
                     <div className="mt-3 text-sm text-navy font-medium">
                       {datesLabel}
@@ -159,10 +167,10 @@ function BookingFlow() {
                     Spaces are open from 08:00 to 18:00. Pick any start and end time.
                     {dayCount > 1 && " The same time will apply to every selected day."}
                   </p>
-                  <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="space-y-5">
                     <div>
                       <Label className="text-navy text-sm">Start time</Label>
-                      <div className="mt-2 grid grid-cols-3 gap-2">
+                      <div className="mt-2 grid grid-cols-5 gap-2">
                         {HOURS.slice(0, -1).map((h) => {
                           const sel = startHour === h;
                           return (
@@ -184,7 +192,7 @@ function BookingFlow() {
                     </div>
                     <div>
                       <Label className="text-navy text-sm">End time</Label>
-                      <div className="mt-2 grid grid-cols-3 gap-2">
+                      <div className="mt-2 grid grid-cols-5 gap-2">
                         {HOURS.slice(1).map((h) => {
                           const disabled = startHour == null || h <= startHour;
                           const sel = endHour === h;
@@ -214,6 +222,7 @@ function BookingFlow() {
                       {hours >= 8 && " · counted as a full day"}
                     </div>
                   )}
+                </div>
                 </div>
               </>
             ) : (

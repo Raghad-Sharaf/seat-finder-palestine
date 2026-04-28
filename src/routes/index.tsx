@@ -33,7 +33,7 @@ function Home() {
                 <span className="text-primary">Secured.</span>
               </h1>
               <p className="mt-5 text-lg text-muted-foreground max-w-md">
-                Browse real desks and rooms, check live availability, and lock in your spot before you leave home. No more walk-in surprises
+                Browse our desks and rooms, check live availability, and lock in your spot before you leave home. No more walk-in surprises
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button asChild size="lg" className="bg-primary hover:bg-primary/90 h-12 px-6 text-base">
