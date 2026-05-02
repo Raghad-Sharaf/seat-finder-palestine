@@ -7,7 +7,7 @@ export function Logo({ className = "" }: { className?: string }) {
       <img
         src={logoImg}
         alt="Multaqa — Coworking & Booking"
-        className="h-[76px] md:h-[76px] w-auto object-contain"
+        className="h-16 md:h-20 w-auto object-contain"
       />
     </Link>
   );

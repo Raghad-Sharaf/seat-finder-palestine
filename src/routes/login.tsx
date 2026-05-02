@@ -1,7 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { SiteHeader } from "@/components/multaqa/SiteHeader";
-import { SiteFooter } from "@/components/multaqa/SiteFooter";
+import { Logo } from "@/components/multaqa/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -25,10 +24,9 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-navy-tint to-primary-tint">
-      <SiteHeader />
-      <main className="flex-1 flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-navy-tint to-primary-tint px-4 py-10">
       <div className="w-full max-w-md">
+        <div className="text-center mb-6"><Logo className="justify-center" /></div>
         <div className="rounded-2xl bg-card border border-border p-7 shadow-sm">
           <h1 className="text-2xl font-bold text-navy">Welcome back</h1>
           <p className="text-sm text-muted-foreground mt-1">Sign in to manage your bookings.</p>
@@ -64,8 +62,6 @@ function LoginPage() {
           Demo: use <code className="px-1 bg-muted rounded">admin@multaqa.ps</code> to access admin.
         </p>
       </div>
-      </main>
-      <SiteFooter />
     </div>
   );
 }
