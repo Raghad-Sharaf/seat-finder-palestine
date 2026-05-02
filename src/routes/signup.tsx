@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Logo } from "@/components/multaqa/Logo";
+import { SiteHeader } from "@/components/multaqa/SiteHeader";
+import { SiteFooter } from "@/components/multaqa/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,9 +13,10 @@ export const Route = createFileRoute("/signup")({
 
 function SignupPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-navy-tint to-primary-tint px-4 py-10">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-navy-tint to-primary-tint">
+      <SiteHeader />
+      <main className="flex-1 flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-md">
-        <div className="text-center mb-6"><Logo className="justify-center" /></div>
         <div className="rounded-2xl bg-card border border-border p-7 shadow-sm">
           <h1 className="text-2xl font-bold text-navy">Create your account</h1>
           <p className="text-sm text-muted-foreground mt-1">Save your bookings and access faster checkout.</p>
@@ -48,6 +50,8 @@ function SignupPage() {
           </p>
         </div>
       </div>
+      </main>
+      <SiteFooter />
     </div>
   );
 }
