@@ -15,7 +15,8 @@ export const Route = createFileRoute("/my-bookings")({
 function MyBookings() {
   const { user } = useAuth();
   const [tab, setTab] = useState<"Upcoming" | "Past">("Upcoming");
-  const [list] = useState<Booking[]>(initialBookings);
+  const [list, setList] = useState<Booking[]>(initialBookings);
+  const [confirmCancel, setConfirmCancel] = useState<string | null>(null);
 
   if (!user) return <Navigate to="/login" />;
 
@@ -24,7 +25,7 @@ function MyBookings() {
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
-      <main className="flex-1 container mx-auto px-4 py-8">
+      <main className="flex-1 w-full max-w-6xl mx-auto px-6 md:px-10 py-8">
         <h1 className="text-3xl font-bold text-navy">My Bookings</h1>
         <p className="text-sm text-muted-foreground mt-1">Manage your reservations.</p>
 
@@ -78,7 +79,22 @@ function MyBookings() {
                       <Button asChild variant="outline" size="sm" className="border-navy/20 text-navy">
                         <Link to="/my-bookings/$bookingId/modify" params={{ bookingId: b.id }}><Edit className="mr-1 h-3.5 w-3.5" />Modify</Link>
                       </Button>
-                      <Button variant="outline" size="sm" className="border-destructive/40 text-destructive hover:bg-destructive hover:text-destructive-foreground"><X className="mr-1 h-3.5 w-3.5" />Cancel</Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-destructive/40 text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                        onClick={() => {
+                          if (confirmCancel === b.id) {
+                            setList((prev) => prev.map((x) => x.id === b.id ? { ...x, bookingStatus: "Cancelled" } : x));
+                            setConfirmCancel(null);
+                          } else {
+                            setConfirmCancel(b.id);
+                            setTimeout(() => setConfirmCancel((c) => c === b.id ? null : c), 4000);
+                          }
+                        }}
+                      >
+                        <X className="mr-1 h-3.5 w-3.5" />{confirmCancel === b.id ? "Click to confirm" : "Cancel"}
+                      </Button>
                     </>
                   ) : (
                     <Button variant="outline" size="sm"><Download className="mr-1 h-3.5 w-3.5" />Receipt</Button>

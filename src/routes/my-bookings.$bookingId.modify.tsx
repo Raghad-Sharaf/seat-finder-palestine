@@ -70,7 +70,18 @@ function ModifyBooking() {
           </div>
 
           <div className="mt-8 flex gap-3">
-            <Button className="bg-primary hover:bg-primary/90" onClick={() => navigate({ to: "/my-bookings" })}>Save Changes</Button>
+            <Button
+              className="bg-primary hover:bg-primary/90"
+              onClick={() => {
+                const d = new Date(date);
+                const formatted = d.toLocaleDateString("en", { month: "short", day: "2-digit", year: "numeric" });
+                booking.date = formatted;
+                booking.timeSlot = slot;
+                navigate({ to: "/my-bookings" });
+              }}
+            >
+              Save Changes
+            </Button>
             <Button variant="outline" asChild><Link to="/my-bookings">Keep Original</Link></Button>
           </div>
         </div>
