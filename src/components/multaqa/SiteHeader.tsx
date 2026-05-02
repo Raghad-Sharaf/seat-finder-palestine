@@ -21,7 +21,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur">
-      <div className="max-w-6xl mx-auto flex h-16 items-center justify-between px-6 md:px-10">
+      <div className="max-w-6xl mx-auto flex h-20 items-center justify-between px-6 md:px-10">
         <Logo />
         <nav className="hidden md:flex items-center gap-8">
           <Link to="/desks" className={navLink} activeProps={activeNav}>Browse Desks</Link>
