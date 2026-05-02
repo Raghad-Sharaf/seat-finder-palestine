@@ -5,7 +5,8 @@ export function SiteFooter() {
     <footer className="border-t border-border bg-navy-tint">
       <div className="max-w-6xl mx-auto px-6 md:px-10 py-10 grid gap-8 md:grid-cols-3 md:[&>*]:min-w-0">
         <div className="flex flex-col">
-          <Logo className="-ml-2 mb-2 [&_img]:!h-12 [&_img]:md:!h-14" />
+          <Logo className="-ml-2 [&_img]:!h-[76px] [&_img]:md:!h-[76px]" />
+          <div className="h-3" aria-hidden />
           <p className="text-sm text-muted-foreground max-w-xs">
             Your seat. Secured. Browse and book coworking spaces across Palestine.
           </p>
