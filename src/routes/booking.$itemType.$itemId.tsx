@@ -243,6 +243,7 @@ function BookingFlow() {
                     <Row label="Date(s)" value={datesLabel} />
                     <Row label="Time" value={slotLabel || "—"} />
                     <Row label="Duration" value={hours >= 8 ? `Full day × ${dayCount}` : `${hours}h × ${dayCount} ${dayCount === 1 ? "day" : "days"}`} />
+                    {room && <Row label="Attendees" value={`${attendees} of ${capacity}`} />}
                     <div className="border-t border-border pt-3 flex justify-between items-baseline">
                       <span className="text-navy font-semibold">Total</span>
                       <span className="text-2xl font-bold text-primary">{price} ILS</span>
@@ -250,6 +251,36 @@ function BookingFlow() {
                     <p className="text-xs text-muted-foreground">No hidden fees. Taxes included.</p>
                   </dl>
                 </div>
+
+                {room && (
+                  <div className="rounded-xl border border-border bg-card p-6">
+                    <h2 className="text-lg font-bold text-navy mb-1 flex items-center gap-2">
+                      <Users className="h-5 w-5 text-primary" /> How many attendees?
+                    </h2>
+                    <p className="text-xs text-muted-foreground mb-4">
+                      This room fits up to <span className="font-semibold text-navy">{capacity}</span> {capacity === 1 ? "person" : "people"}.
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <Button type="button" variant="outline" size="sm" onClick={() => setAttendees((n) => Math.max(1, n - 1))} disabled={attendees <= 1}>−</Button>
+                      <Input
+                        type="number"
+                        min={1}
+                        max={capacity}
+                        value={attendees}
+                        onChange={(e) => {
+                          const v = parseInt(e.target.value, 10);
+                          if (!Number.isNaN(v)) setAttendees(Math.min(capacity, Math.max(1, v)));
+                        }}
+                        className="w-24 text-center"
+                      />
+                      <Button type="button" variant="outline" size="sm" onClick={() => setAttendees((n) => Math.min(capacity, n + 1))} disabled={attendees >= capacity}>+</Button>
+                      <span className="text-xs text-muted-foreground">/ {capacity} max</span>
+                    </div>
+                    {attendeesError && (
+                      <p className="mt-2 text-xs text-destructive">{attendeesError}</p>
+                    )}
+                  </div>
+                )}
 
                 {!user && (
                   <div className="rounded-xl border border-border bg-card p-6">
