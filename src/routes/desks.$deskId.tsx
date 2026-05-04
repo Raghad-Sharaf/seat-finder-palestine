@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useParams, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, useParams, notFound, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteHeader } from "@/components/multaqa/SiteHeader";
 import { SiteFooter } from "@/components/multaqa/SiteFooter";
@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { getDesk, locationAddress } from "@/lib/multaqa/data";
 import { Check, X, MessageCircle, Star, MapPin, ArrowLeft, ChevronLeft, ChevronRight, Info } from "lucide-react";
+import { useAuth } from "@/lib/multaqa/auth";
 
 export const Route = createFileRoute("/desks/$deskId")({
   head: ({ params }) => {
@@ -24,6 +25,8 @@ export const Route = createFileRoute("/desks/$deskId")({
 
 function DeskDetail() {
   const { deskId } = useParams({ from: "/desks/$deskId" });
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const desk = getDesk(deskId);
   if (!desk) throw notFound();
   const [photoIdx, setPhotoIdx] = useState(0);
@@ -38,7 +41,7 @@ function DeskDetail() {
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
-      <main className="flex-1 container mx-auto px-4 py-6">
+      <main className="flex-1 w-full max-w-6xl mx-auto px-6 md:px-10 py-6">
         <Link to="/desks" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary mb-4">
           <ArrowLeft className="h-4 w-4" /> Back to desks
         </Link>
@@ -160,13 +163,17 @@ function DeskDetail() {
                 <div className="flex justify-between"><span className="text-muted-foreground">Full day</span><span className="font-semibold text-navy">{desk.priceFullDay} ILS</span></div>
               </div>
               <Button
-                asChild
                 disabled={desk.status !== "Available"}
+                onClick={() => {
+                  if (!user) {
+                    navigate({ to: "/login", search: { redirect: `/desks/${desk.id}` } });
+                    return;
+                  }
+                  navigate({ to: "/booking/$itemType/$itemId", params: { itemType: "desk", itemId: desk.id } });
+                }}
                 className="mt-6 w-full h-11 bg-success hover:bg-success/90 text-success-foreground disabled:opacity-50"
               >
-                <Link to="/booking/$itemType/$itemId" params={{ itemType: "desk", itemId: desk.id }}>
-                  {desk.status === "Available" ? "Book This Desk" : "Currently Reserved"}
-                </Link>
+                {desk.status === "Available" ? "Book This Desk" : "Currently Reserved"}
               </Button>
               <Button variant="outline" className="mt-2 w-full h-10 border-navy/20 text-navy">
                 <MessageCircle className="mr-2 h-4 w-4" /> Contact via WhatsApp

@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useParams, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, useParams, notFound, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteHeader } from "@/components/multaqa/SiteHeader";
 import { SiteFooter } from "@/components/multaqa/SiteFooter";
@@ -6,6 +6,7 @@ import { StatusBadge } from "@/components/multaqa/LocationToggle";
 import { Button } from "@/components/ui/button";
 import { getRoom, locationAddress } from "@/lib/multaqa/data";
 import { Check, X, MessageCircle, Users, MapPin, ArrowLeft, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { useAuth } from "@/lib/multaqa/auth";
 
 export const Route = createFileRoute("/rooms/$roomId")({
   head: ({ params }) => {
@@ -22,6 +23,8 @@ export const Route = createFileRoute("/rooms/$roomId")({
 
 function RoomDetail() {
   const { roomId } = useParams({ from: "/rooms/$roomId" });
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const room = getRoom(roomId);
   if (!room || room.adminOnly) throw notFound();
   const [photoIdx, setPhotoIdx] = useState(0);
@@ -30,7 +33,7 @@ function RoomDetail() {
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
-      <main className="flex-1 container mx-auto px-4 py-6">
+      <main className="flex-1 w-full max-w-6xl mx-auto px-6 md:px-10 py-6">
         <Link to="/rooms" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary mb-4">
           <ArrowLeft className="h-4 w-4" /> Back to rooms
         </Link>
@@ -123,13 +126,17 @@ function RoomDetail() {
                 <div className="flex justify-between"><span className="text-muted-foreground">Half-day</span><span className="font-semibold text-navy">{room.priceHalfDay} ILS</span></div>
               </div>
               <Button
-                asChild
                 disabled={room.status !== "Available"}
+                onClick={() => {
+                  if (!user) {
+                    navigate({ to: "/login", search: { redirect: `/rooms/${room.id}` } });
+                    return;
+                  }
+                  navigate({ to: "/booking/$itemType/$itemId", params: { itemType: "room", itemId: room.id } });
+                }}
                 className="mt-6 w-full h-11 bg-success hover:bg-success/90 text-success-foreground disabled:opacity-50"
               >
-                <Link to="/booking/$itemType/$itemId" params={{ itemType: "room", itemId: room.id }}>
-                  {room.status === "Available" ? "Book This Room" : "Currently Reserved"}
-                </Link>
+                {room.status === "Available" ? "Book This Room" : "Currently Reserved"}
               </Button>
               <Button variant="outline" className="mt-2 w-full h-10 border-navy/20 text-navy">
                 <MessageCircle className="mr-2 h-4 w-4" /> Contact via WhatsApp

@@ -8,19 +8,30 @@ import { useAuth } from "@/lib/multaqa/auth";
 
 export const Route = createFileRoute("/login")({
   head: () => ({ meta: [{ title: "Log in — Multaqa" }] }),
+  validateSearch: (s: Record<string, unknown>): { redirect?: string } => ({
+    redirect: typeof s.redirect === "string" && s.redirect ? s.redirect : undefined,
+  }),
   component: LoginPage,
 });
 
 function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const search = Route.useSearch();
   const [email, setEmail] = useState("khalid@example.com");
   const [password, setPassword] = useState("demo");
 
   const handle = (e: React.FormEvent) => {
     e.preventDefault();
     login(email);
-    navigate({ to: email.toLowerCase().includes("admin") ? "/admin" : "/my-bookings" });
+    if (email.toLowerCase().includes("admin")) {
+      navigate({ to: "/admin" });
+    } else if (search.redirect) {
+      // Honor redirect-back so users land on the page they came from
+      window.location.href = search.redirect;
+    } else {
+      navigate({ to: "/my-bookings" });
+    }
   };
 
   return (
@@ -28,6 +39,11 @@ function LoginPage() {
       <SiteHeader />
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-10">
         <div className="w-full max-w-md">
+        {search.redirect && (
+          <div className="mb-4 rounded-lg border border-primary/30 bg-primary-tint px-4 py-3 text-sm text-navy">
+            Please log in to complete your booking.
+          </div>
+        )}
         <div className="rounded-2xl bg-card border border-border p-7 shadow-sm">
           <h1 className="text-2xl font-bold text-navy">Welcome back</h1>
           <p className="text-sm text-muted-foreground mt-1">Sign in to manage your bookings.</p>

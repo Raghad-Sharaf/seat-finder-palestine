@@ -88,19 +88,19 @@ function RoomsPage() {
             <Button asChild className="mt-4 bg-primary hover:bg-primary/90"><Link to="/desks">Browse Desks</Link></Button>
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
             {filtered.map((r) => (
               <Link
                 key={r.id}
                 to="/rooms/$roomId"
                 params={{ roomId: r.id }}
-                className="group rounded-xl border border-border bg-card overflow-hidden hover:border-primary hover:shadow-lg transition-all"
+                className="group rounded-xl border border-border bg-card overflow-hidden hover:border-primary hover:shadow-lg transition-all flex flex-col h-full"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                   <img src={r.image} alt={r.name} loading="lazy" width={1024} height={768} className="h-full w-full object-cover group-hover:scale-105 transition-transform" />
                   <div className="absolute top-3 right-3"><StatusBadge status={r.status} /></div>
                 </div>
-                <div className="p-4">
+                <div className="p-4 flex flex-col flex-1">
                   <div className="flex items-start justify-between gap-2">
                     <h3 className="font-semibold text-navy">{r.name}</h3>
                     <span className="text-xs px-2 py-0.5 rounded-full bg-navy-tint text-navy">{r.type}</span>
@@ -108,7 +108,7 @@ function RoomsPage() {
                   <div className="mt-3 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
                     <Users className="h-3.5 w-3.5" /> Up to {r.capacity} {r.capacity === 1 ? "person" : "people"}
                   </div>
-                  <div className="mt-3 flex items-center justify-between">
+                  <div className="mt-auto pt-3 flex items-center justify-between">
                     <div className="text-sm">
                       <span className="text-muted-foreground">From </span>
                       <span className="font-bold text-navy">{r.pricePerHour} ILS</span>
