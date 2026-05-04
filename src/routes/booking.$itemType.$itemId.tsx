@@ -9,6 +9,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { getDesk, getRoom } from "@/lib/multaqa/data";
 import { useAuth } from "@/lib/multaqa/auth";
 import { Check, Info, Banknote, Calendar as CalendarIcon, Clock, ArrowLeft } from "lucide-react";
+import { Users } from "lucide-react";
 
 export const Route = createFileRoute("/booking/$itemType/$itemId")({
   component: BookingFlow,
@@ -39,6 +40,13 @@ function BookingFlow() {
   const isDesk = params.itemType === "desk";
   const desk = isDesk ? (item as ReturnType<typeof getDesk>)! : null;
   const room = !isDesk ? (item as ReturnType<typeof getRoom>)! : null;
+
+  // Room-only: number of attendees, capped at room.capacity
+  const [attendees, setAttendees] = useState<number>(1);
+  const capacity = room?.capacity ?? 1;
+  const attendeesError = room && (attendees < 1 || attendees > capacity)
+    ? `Please pick between 1 and ${capacity} attendees.`
+    : null;
 
   // Pricing: hourly × hours × number of days. Cap at full-day price per day.
   const hours = startHour != null && endHour != null && endHour > startHour ? endHour - startHour : 0;
@@ -315,7 +323,7 @@ function BookingFlow() {
               ) : (
                 <Button
                   className="w-full h-11 mt-4 bg-success hover:bg-success/90"
-                  disabled={!email}
+                  disabled={!email || !!attendeesError}
                   onClick={confirm}
                 >
                   Confirm Booking
