@@ -8,8 +8,8 @@ import { useAuth } from "@/lib/multaqa/auth";
 
 export const Route = createFileRoute("/login")({
   head: () => ({ meta: [{ title: "Log in — Multaqa" }] }),
-  validateSearch: (s: Record<string, unknown>) => ({
-    redirect: typeof s.redirect === "string" ? s.redirect : "",
+  validateSearch: (s: Record<string, unknown>): { redirect?: string } => ({
+    redirect: typeof s.redirect === "string" && s.redirect ? s.redirect : undefined,
   }),
   component: LoginPage,
 });
