@@ -30,7 +30,7 @@ function RoomDetail() {
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
-      <main className="flex-1 container mx-auto px-4 py-6">
+      <main className="flex-1 w-full max-w-6xl mx-auto px-6 md:px-10 py-6">
         <Link to="/rooms" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary mb-4">
           <ArrowLeft className="h-4 w-4" /> Back to rooms
         </Link>
