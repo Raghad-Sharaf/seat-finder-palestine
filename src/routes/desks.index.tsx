@@ -90,13 +90,13 @@ function DesksPage() {
             </div>
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-stretch">
             {filtered.map((d) => (
               <Link
                 key={d.id}
                 to="/desks/$deskId"
                 params={{ deskId: d.id }}
-                className="group rounded-xl border border-border bg-card overflow-hidden hover:border-primary hover:shadow-lg transition-all"
+                className="group rounded-xl border border-border bg-card overflow-hidden hover:border-primary hover:shadow-lg transition-all flex flex-col h-full"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                   <img src={d.image} alt={d.name} loading="lazy" width={1024} height={768} className="h-full w-full object-cover group-hover:scale-105 transition-transform" />
@@ -106,7 +106,7 @@ function DesksPage() {
                     <StatusBadge status={d.status} />
                   </div>
                 </div>
-                <div className="p-4">
+                <div className="p-4 flex flex-col flex-1">
                   <div className="flex items-start justify-between gap-2">
                     <h3 className="font-semibold text-navy">{d.name}</h3>
                     <span className="shrink-0 inline-block w-fit text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground whitespace-nowrap">{d.type}</span>
@@ -120,7 +120,7 @@ function DesksPage() {
                       <span className="inline-flex items-center gap-1"><MonitorIcon className="h-3 w-3" />Monitor</span>
                     )}
                   </div>
-                  <div className="mt-3 flex items-center justify-between">
+                  <div className="mt-auto pt-3 flex items-center justify-between">
                     <div className="text-sm">
                       <span className="text-muted-foreground">From </span>
                       <span className="font-bold text-navy">{d.pricePerHour} ILS</span>
