@@ -6,6 +6,18 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/multaqa/auth";
 import { bookings as initialBookings, type Booking } from "@/lib/multaqa/data";
 import { Calendar, MapPin, Download, Edit, X, Banknote, CheckCircle2 } from "lucide-react";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/my-bookings")({
   head: () => ({ meta: [{ title: "My Bookings — Multaqa" }] }),
@@ -16,7 +28,6 @@ function MyBookings() {
   const { user } = useAuth();
   const [tab, setTab] = useState<"Upcoming" | "Past">("Upcoming");
   const [list, setList] = useState<Booking[]>(initialBookings);
-  const [confirmCancel, setConfirmCancel] = useState<string | null>(null);
 
   if (!user) return <Navigate to="/login" />;
 
@@ -79,22 +90,41 @@ function MyBookings() {
                       <Button asChild variant="outline" size="sm" className="border-navy/20 text-navy">
                         <Link to="/my-bookings/$bookingId/modify" params={{ bookingId: b.id }}><Edit className="mr-1 h-3.5 w-3.5" />Modify</Link>
                       </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-destructive/40 text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                        onClick={() => {
-                          if (confirmCancel === b.id) {
-                            setList((prev) => prev.map((x) => x.id === b.id ? { ...x, bookingStatus: "Cancelled" } : x));
-                            setConfirmCancel(null);
-                          } else {
-                            setConfirmCancel(b.id);
-                            setTimeout(() => setConfirmCancel((c) => c === b.id ? null : c), 4000);
-                          }
-                        }}
-                      >
-                        <X className="mr-1 h-3.5 w-3.5" />{confirmCancel === b.id ? "Click to confirm" : "Cancel"}
-                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="border-destructive/40 text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                          >
+                            <X className="mr-1 h-3.5 w-3.5" />Cancel
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Cancel this booking?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              You're about to cancel <span className="font-semibold text-navy">{b.itemName}</span> on {b.date} ({b.timeSlot}).
+                              {b.paymentStatus === "Paid"
+                                ? " A refund will be issued per our policy if eligible."
+                                : " No payment is due since this booking is unpaid."}
+                              {" "}This action can't be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Keep booking</AlertDialogCancel>
+                            <AlertDialogAction
+                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                              onClick={() => {
+                                setList((prev) => prev.map((x) => x.id === b.id ? { ...x, bookingStatus: "Cancelled" } : x));
+                                toast.success("Booking cancelled", { description: `Ref ${b.ref}` });
+                              }}
+                            >
+                              Yes, cancel
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </>
                   ) : (
                     <Button variant="outline" size="sm"><Download className="mr-1 h-3.5 w-3.5" />Receipt</Button>
