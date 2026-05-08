@@ -1,6 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { AuthProvider } from "@/lib/multaqa/auth";
+import { Toaster } from "sonner";
 
 function NotFoundComponent() {
   return (
@@ -70,6 +71,7 @@ function RootComponent() {
   return (
     <AuthProvider>
       <Outlet />
+      <Toaster richColors position="top-right" />
     </AuthProvider>
   );
 }
