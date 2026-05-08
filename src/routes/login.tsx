@@ -39,11 +39,6 @@ function LoginPage() {
       <SiteHeader />
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-10">
         <div className="w-full max-w-md">
-        {search.redirect && (
-          <div className="mb-4 rounded-lg border border-primary/30 bg-primary-tint px-4 py-3 text-sm text-navy">
-            Please log in to complete your booking.
-          </div>
-        )}
         <div className="rounded-2xl bg-card border border-border p-7 shadow-sm">
           <h1 className="text-2xl font-bold text-navy">Welcome back</h1>
           <p className="text-sm text-muted-foreground mt-1">Sign in to manage your bookings.</p>
@@ -69,7 +64,14 @@ function LoginPage() {
             Sign in with Google
           </Button>
           <p className="mt-5 text-sm text-center text-muted-foreground">
-            Don't have an account? <Link to="/signup" className="text-primary font-semibold hover:underline">Sign up</Link>
+            Don't have an account?{" "}
+            <Link
+              to="/signup"
+              search={search.redirect ? { redirect: search.redirect } : undefined}
+              className="text-primary font-semibold hover:underline"
+            >
+              Sign up
+            </Link>
           </p>
         </div>
         <p className="mt-4 text-xs text-center text-muted-foreground">
