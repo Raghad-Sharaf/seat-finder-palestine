@@ -1,0 +1,14 @@
+# Multaqa
+
+> Multaqa is a coworking-space booking platform for Nablus and Ramallah, Palestine. Browse desks and private/meeting rooms, see live availability, and reserve a seat before you arrive.
+
+## Pages
+
+- [Home](/): Overview of Multaqa, live availability, and how booking works.
+- [Browse Desks](/desks): Flex, hot, and dedicated desks across both locations with filters.
+- [Browse Rooms](/rooms): Private offices and meeting rooms with capacity and equipment details.
+
+## Optional
+
+- [Example desk](/desks/desk-1): Sample desk detail page with photos, amenities, and pricing.
+- [Example room](/rooms/room-1): Sample room detail page with capacity, equipment, and pricing.
