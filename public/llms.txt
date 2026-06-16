@@ -10,5 +10,5 @@
 
 ## Optional
 
-- [Example desk](/desks/desk-1): Sample desk detail page with photos, amenities, and pricing.
-- [Example room](/rooms/room-1): Sample room detail page with capacity, equipment, and pricing.
+- [Example desk](/desks/n-a1): Sample desk detail page with photos, amenities, and pricing.
+- [Example room](/rooms/n-focus): Sample room detail page with capacity, equipment, and pricing.
