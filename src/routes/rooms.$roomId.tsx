@@ -11,11 +11,43 @@ import { useAuth } from "@/lib/multaqa/auth";
 export const Route = createFileRoute("/rooms/$roomId")({
   head: ({ params }) => {
     const r = getRoom(params.roomId);
+    const url = `https://seat-finder-palestine.lovable.app/rooms/${params.roomId}`;
+    const title = r ? `${r.name} — Multaqa` : "Room — Multaqa";
+    const description = r ? `Book ${r.name} at Multaqa ${r.location}. Fits up to ${r.capacity} people.` : "Room details";
     return {
       meta: [
-        { title: r ? `${r.name} — Multaqa` : "Room — Multaqa" },
-        { name: "description", content: r ? `Book ${r.name} at Multaqa ${r.location}. Fits up to ${r.capacity} people.` : "Room details" },
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "product" },
       ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: r
+        ? [
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Product",
+                name: r.name,
+                description,
+                category: r.type,
+                offers: {
+                  "@type": "Offer",
+                  price: r.pricePerHour,
+                  priceCurrency: "ILS",
+                  availability:
+                    r.status === "Available"
+                      ? "https://schema.org/InStock"
+                      : "https://schema.org/OutOfStock",
+                  url,
+                },
+              }),
+            },
+          ]
+        : [],
     };
   },
   component: RoomDetail,
