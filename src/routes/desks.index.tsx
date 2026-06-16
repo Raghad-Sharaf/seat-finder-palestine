@@ -12,7 +12,11 @@ export const Route = createFileRoute("/desks/")({
     meta: [
       { title: "Browse Desks — Multaqa" },
       { name: "description", content: "Browse coworking desks in Nablus and Ramallah. Filter by zone, type, and amenities." },
+      { property: "og:title", content: "Browse Desks — Multaqa" },
+      { property: "og:description", content: "Browse coworking desks in Nablus and Ramallah." },
+      { property: "og:url", content: "https://seat-finder-palestine.lovable.app/desks" },
     ],
+    links: [{ rel: "canonical", href: "https://seat-finder-palestine.lovable.app/desks" }],
   }),
   component: DesksPage,
 });
