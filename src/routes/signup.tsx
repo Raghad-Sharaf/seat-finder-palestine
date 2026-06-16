@@ -9,7 +9,16 @@ import { useAuth } from "@/lib/multaqa/auth";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/signup")({
-  head: () => ({ meta: [{ title: "Sign up — Multaqa" }] }),
+  head: () => ({
+    meta: [
+      { title: "Sign up — Multaqa" },
+      { name: "description", content: "Create a Multaqa account to book desks and meeting rooms across Nablus and Ramallah." },
+      { property: "og:title", content: "Sign up — Multaqa" },
+      { property: "og:url", content: "https://seat-finder-palestine.lovable.app/signup" },
+      { name: "robots", content: "noindex" },
+    ],
+    links: [{ rel: "canonical", href: "https://seat-finder-palestine.lovable.app/signup" }],
+  }),
   validateSearch: (s: Record<string, unknown>): { redirect?: string } => ({
     redirect: typeof s.redirect === "string" && s.redirect ? s.redirect : undefined,
   }),

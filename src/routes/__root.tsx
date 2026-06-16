@@ -30,15 +30,9 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Multaqa — Your seat. Secured." },
-      { name: "description", content: "Browse and book coworking desks and rooms in Nablus and Ramallah. Reserve your spot in advance — no walk-in surprises." },
-      { property: "og:title", content: "Multaqa — Your seat. Secured." },
-      { property: "og:description", content: "Browse and book coworking desks and rooms in Nablus and Ramallah. Reserve your spot in advance — no walk-in surprises." },
+      { title: "Multaqa" },
       { property: "og:type", content: "website" },
-      { name: "twitter:title", content: "Multaqa — Your seat. Secured." },
-      { name: "twitter:description", content: "Browse and book coworking desks and rooms in Nablus and Ramallah. Reserve your spot in advance — no walk-in surprises." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/1e7208d2-a896-48bd-8841-410c6f6ba055" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/1e7208d2-a896-48bd-8841-410c6f6ba055" },
+      { property: "og:site_name", content: "Multaqa" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
@@ -46,6 +40,28 @@ export const Route = createRootRoute({
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Multaqa",
+          url: "https://seat-finder-palestine.lovable.app",
+          description: "Coworking space booking for Nablus and Ramallah, Palestine.",
+          areaServed: ["Nablus", "Ramallah"],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Multaqa",
+          url: "https://seat-finder-palestine.lovable.app",
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,

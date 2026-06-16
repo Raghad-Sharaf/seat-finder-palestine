@@ -12,11 +12,43 @@ import { useAuth } from "@/lib/multaqa/auth";
 export const Route = createFileRoute("/desks/$deskId")({
   head: ({ params }) => {
     const d = getDesk(params.deskId);
+    const url = `https://seat-finder-palestine.lovable.app/desks/${params.deskId}`;
+    const title = d ? `${d.name} — Multaqa` : "Desk — Multaqa";
+    const description = d ? `Book ${d.name} at Multaqa ${d.location}. ${d.zone} zone, from ${d.pricePerHour} ILS/hr.` : "Desk details";
     return {
       meta: [
-        { title: d ? `${d.name} — Multaqa` : "Desk — Multaqa" },
-        { name: "description", content: d ? `Book ${d.name} at Multaqa ${d.location}. ${d.zone} zone, from ${d.pricePerHour} ILS/hr.` : "Desk details" },
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "product" },
       ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: d
+        ? [
+            {
+              type: "application/ld+json",
+              children: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Product",
+                name: d.name,
+                description,
+                category: d.type,
+                offers: {
+                  "@type": "Offer",
+                  price: d.pricePerHour,
+                  priceCurrency: "ILS",
+                  availability:
+                    d.status === "Available"
+                      ? "https://schema.org/InStock"
+                      : "https://schema.org/OutOfStock",
+                  url,
+                },
+              }),
+            },
+          ]
+        : [],
     };
   },
   component: DeskDetail,

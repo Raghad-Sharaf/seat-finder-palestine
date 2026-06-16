@@ -12,7 +12,11 @@ export const Route = createFileRoute("/rooms/")({
     meta: [
       { title: "Browse Rooms — Multaqa" },
       { name: "description", content: "Private offices and meeting rooms in Nablus and Ramallah." },
+      { property: "og:title", content: "Browse Rooms — Multaqa" },
+      { property: "og:description", content: "Private offices and meeting rooms in Nablus and Ramallah." },
+      { property: "og:url", content: "https://seat-finder-palestine.lovable.app/rooms" },
     ],
+    links: [{ rel: "canonical", href: "https://seat-finder-palestine.lovable.app/rooms" }],
   }),
   component: RoomsPage,
 });
