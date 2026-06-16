@@ -10,7 +10,13 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Multaqa — Your seat. Secured." },
       { name: "description", content: "Browse and book coworking desks and rooms in Nablus and Ramallah. Reserve your spot in advance — confirmed before you arrive." },
+      { property: "og:title", content: "Multaqa — Your seat. Secured." },
+      { property: "og:description", content: "Browse and book coworking desks and rooms in Nablus and Ramallah." },
+      { property: "og:url", content: "https://seat-finder-palestine.lovable.app/" },
+      { name: "twitter:title", content: "Multaqa — Your seat. Secured." },
+      { name: "twitter:description", content: "Browse and book coworking desks and rooms in Nablus and Ramallah." },
     ],
+    links: [{ rel: "canonical", href: "https://seat-finder-palestine.lovable.app/" }],
   }),
   component: Home,
 });
