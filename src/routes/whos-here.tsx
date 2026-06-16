@@ -9,7 +9,16 @@ import { todaysMembers, type Location } from "@/lib/multaqa/data";
 import { useAuth } from "@/lib/multaqa/auth";
 
 export const Route = createFileRoute("/whos-here")({
-  head: () => ({ meta: [{ title: "Who's in the space today — Multaqa" }] }),
+  head: () => ({
+    meta: [
+      { title: "Who's in the space today — Multaqa" },
+      { name: "description", content: "See which Multaqa members are working from Nablus or Ramallah today before you head in." },
+      { property: "og:title", content: "Who's in the space today — Multaqa" },
+      { property: "og:url", content: "https://seat-finder-palestine.lovable.app/whos-here" },
+      { name: "robots", content: "noindex" },
+    ],
+    links: [{ rel: "canonical", href: "https://seat-finder-palestine.lovable.app/whos-here" }],
+  }),
   component: WhosHere,
 });
 

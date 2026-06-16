@@ -7,7 +7,16 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/lib/multaqa/auth";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Log in — Multaqa" }] }),
+  head: () => ({
+    meta: [
+      { title: "Log in — Multaqa" },
+      { name: "description", content: "Log in to your Multaqa account to manage and confirm your coworking desk and room bookings." },
+      { property: "og:title", content: "Log in — Multaqa" },
+      { property: "og:url", content: "https://seat-finder-palestine.lovable.app/login" },
+      { name: "robots", content: "noindex" },
+    ],
+    links: [{ rel: "canonical", href: "https://seat-finder-palestine.lovable.app/login" }],
+  }),
   validateSearch: (s: Record<string, unknown>): { redirect?: string } => ({
     redirect: typeof s.redirect === "string" && s.redirect ? s.redirect : undefined,
   }),
