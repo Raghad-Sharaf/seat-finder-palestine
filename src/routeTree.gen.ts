@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhosHereRouteImport } from './routes/whos-here'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as MyBookingsRouteImport } from './routes/my-bookings'
 import { Route as LoginRouteImport } from './routes/login'
@@ -33,6 +34,11 @@ import { Route as BookingItemTypeItemIdRouteImport } from './routes/booking.$ite
 const WhosHereRoute = WhosHereRouteImport.update({
   id: '/whos-here',
   path: '/whos-here',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -138,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/my-bookings': typeof MyBookingsRouteWithChildren
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/whos-here': typeof WhosHereRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/bookings': typeof AdminBookingsRoute
@@ -159,6 +166,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/my-bookings': typeof MyBookingsRouteWithChildren
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/whos-here': typeof WhosHereRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/bookings': typeof AdminBookingsRoute
@@ -182,6 +190,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/my-bookings': typeof MyBookingsRouteWithChildren
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/whos-here': typeof WhosHereRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/bookings': typeof AdminBookingsRoute
@@ -206,6 +215,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/my-bookings'
     | '/signup'
+    | '/sitemap.xml'
     | '/whos-here'
     | '/admin/analytics'
     | '/admin/bookings'
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/my-bookings'
     | '/signup'
+    | '/sitemap.xml'
     | '/whos-here'
     | '/admin/analytics'
     | '/admin/bookings'
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/my-bookings'
     | '/signup'
+    | '/sitemap.xml'
     | '/whos-here'
     | '/admin/analytics'
     | '/admin/bookings'
@@ -272,6 +284,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MyBookingsRoute: typeof MyBookingsRouteWithChildren
   SignupRoute: typeof SignupRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   WhosHereRoute: typeof WhosHereRoute
   BookingConfirmationRoute: typeof BookingConfirmationRoute
   DesksDeskIdRoute: typeof DesksDeskIdRoute
@@ -288,6 +301,13 @@ declare module '@tanstack/react-router' {
       path: '/whos-here'
       fullPath: '/whos-here'
       preLoaderRoute: typeof WhosHereRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -466,6 +486,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MyBookingsRoute: MyBookingsRouteWithChildren,
   SignupRoute: SignupRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   WhosHereRoute: WhosHereRoute,
   BookingConfirmationRoute: BookingConfirmationRoute,
   DesksDeskIdRoute: DesksDeskIdRoute,
