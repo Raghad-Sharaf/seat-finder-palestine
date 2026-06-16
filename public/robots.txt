@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /my-bookings
+
+Sitemap: https://seat-finder-palestine.lovable.app/sitemap.xml
