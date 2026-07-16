@@ -129,6 +129,9 @@ mock data and simulated interactions. No real bookings, payments, or
 emails are processed. All placeholder names, prices, and locations 
 are fictional assumptions made to ground the product in a realistic context.
 
+## Product Link (Using Replit)
+ https://mult-link-proto--multaqa.replit.app/
+ 
 ---
 
 *Prepared by Raghad Sharaf — Product Management Project, May 2026*
